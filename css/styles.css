@@ -169,33 +169,41 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 12px);}
    ========================================================================== */
 .hero{
   padding-block:clamp(3rem,2rem + 5vw,5.5rem) clamp(3rem,2rem + 5vw,5.5rem);
-  text-align:center;
 }
-.hero__copy{max-width:880px;margin-inline:auto;}
-.hero .eyebrow{justify-content:center;}
-.hero h1{font-size:var(--step-hero);margin-bottom:22px;text-wrap:balance;}
+/* 2 cột: chữ trái — ảnh dọc phải (ảnh giữ nguyên tỉ lệ gốc, không cắt) */
+.hero__grid{
+  display:grid;grid-template-columns:1.24fr 0.76fr;
+  gap:clamp(2rem,5vw,4.5rem);align-items:center;
+}
+.hero h1{
+  /* nhỏ hơn --step-hero vì giờ nằm trong cột hẹp hơn toàn khung */
+  font-size:clamp(2.125rem,1.35rem + 2.35vw,3.25rem);
+  margin-bottom:20px;text-wrap:balance;
+}
 .hero__sub{
   font-size:clamp(1rem,0.96rem + 0.28vw,1.1875rem);
-  color:var(--fg-2);max-width:60ch;margin:0 auto 34px;
+  color:var(--fg-2);max-width:44ch;margin:0 0 32px;
 }
-.hero__actions{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;}
+.hero__actions{display:flex;flex-wrap:wrap;gap:14px;}
 
 /* ---- Ảnh hero: thẻ anchor DUY NHẤT có shadow trên trang ---- */
-.hero__video{position:relative;max-width:900px;margin:clamp(2.5rem,5vw,4rem) auto 0;}
+.hero__video{position:relative;max-width:400px;margin-inline:auto;width:100%;}
 .hero__player{
   display:block;position:relative;overflow:hidden;
   border-radius:var(--r-anchor);border:2px solid var(--fg-1);
   box-shadow:var(--shadow-anchor);background:var(--fg-1);
 }
-.hero__player img{
-  width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center 30%;
-}
-/* nét vẽ tay coral chỉ lên ảnh, nằm cạnh dòng credit */
+/* height:auto — giữ đúng tỉ lệ gốc của ảnh, không crop */
+.hero__player img{width:100%;height:auto;display:block;}
+/* Nét vẽ tay coral chỉ lên ảnh. Neo vào cạnh TRÁI của ảnh (không phải đáy)
+   để không đè lên dòng credit — credit giờ nằm gọn trong cột hẹp. */
 .hero__deco{
-  position:absolute;left:-34px;bottom:-12px;width:78px;height:auto;pointer-events:none;
+  position:absolute;left:-52px;bottom:96px;width:64px;height:auto;pointer-events:none;
 }
-@media (max-width:1120px){ .hero__deco{left:-6px;bottom:-14px;width:64px;} }
-.hero__credit{margin-top:18px;font-size:0.9375rem;color:var(--fg-3);}
+@media (max-width:1120px){ .hero__deco{left:-44px;bottom:80px;width:56px;} }
+.hero__credit{
+  margin-top:16px;font-size:0.875rem;line-height:1.5;color:var(--fg-3);text-align:center;
+}
 
 /* ---- Tag uy tín ---- */
 .hero__tags{
@@ -218,12 +226,21 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 12px);}
   font-variant-numeric:tabular-nums;
 }
 
-.hero__disclaimer{margin-top:20px;font-size:0.75rem;color:var(--fg-4);}
+.hero__disclaimer{margin-top:20px;font-size:0.75rem;color:var(--fg-4);text-align:center;}
 
+/* Màn hẹp: xếp dọc, chữ căn giữa lại như cũ, ảnh xuống dưới */
+@media (max-width:880px){
+  .hero__grid{grid-template-columns:1fr;gap:clamp(2rem,6vw,2.75rem);}
+  .hero__copy{text-align:center;}
+  .hero .eyebrow{justify-content:center;}
+  .hero__sub{max-width:52ch;margin-inline:auto;}
+  .hero__actions{justify-content:center;}
+  .hero__video{max-width:340px;}
+}
 @media (max-width:640px){
-  .hero h1 br{display:none;}
   .hero__actions .btn{width:100%;}
   .hero__deco{display:none;}
+  .hero__video{max-width:290px;}
 }
 
 /* ==========================================================================

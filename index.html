@@ -12,7 +12,7 @@
 <link rel="manifest" href="site.webmanifest">
 <link rel="preload" href="fonts/SVN-Recoleta%20Bold.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="fonts/SVN-Gilroy%20Regular.otf" as="font" type="font/otf" crossorigin>
-<link rel="stylesheet" href="css/styles.css?v=23">
+<link rel="stylesheet" href="css/styles.css?v=25">
 </head>
 <body>
 
@@ -38,40 +38,42 @@
   <section class="hero">
     <div class="container">
 
-      <div class="hero__copy">
-        <p class="eyebrow">Coaching 1 kèm nhóm nhỏ · Nam Anh</p>
-        <h1>
-          Xây một Kênh Tay Trái cho bạn<br>
-          thu nhập thụ động <span class="mark mark--underline num">20tr+/tháng</span>
-        </h1>
-        <p class="hero__sub">
-          Kênh Tay Trái là lộ trình giúp bạn biến thương hiệu cá nhân thành một
-          nguồn thu tối thiểu 20 triệu mỗi tháng. Bạn có các quy trình từng bước
-          cụ thể để đi, có mình và team kèm sát để không bỏ dở, và được hỗ trợ
-          mỗi khi gặp vướng mắc.
-        </p>
+      <div class="hero__grid">
 
-        <div class="hero__actions">
-          <a class="btn btn--mint" href="#dang-ky">Đăng ký cohort tiếp theo</a>
-          <a class="btn btn--outline" href="#chuong-trinh">Xem lộ trình</a>
+        <div class="hero__copy">
+          <p class="eyebrow">Coaching 1 kèm nhóm nhỏ · Nam Anh</p>
+          <h1>
+            Xây một Kênh Tay Trái cho bạn
+            thu nhập thụ động <span class="mark mark--underline num">20tr+/tháng</span>
+          </h1>
+          <p class="hero__sub">
+            Kênh Tay Trái là lộ trình biến thương hiệu cá nhân thành nguồn thu
+            thứ hai, với mục tiêu ít nhất bằng hoặc vượt xa mức lương cơ bản
+            bạn đang có.
+          </p>
+
+          <div class="hero__actions">
+            <a class="btn btn--mint" href="#dang-ky">Đăng ký cohort tiếp theo</a>
+            <a class="btn btn--outline" href="#chuong-trinh">Xem lộ trình</a>
+          </div>
         </div>
+
+        <figure class="hero__video" id="video">
+          <div class="hero__player">
+            <img src="assets/img/hero-talk-hvnh.jpg" alt="Nam Anh chia sẻ trước sinh viên tại Học viện Ngân hàng" width="840" height="1493" fetchpriority="high" decoding="async">
+          </div>
+
+          <svg class="hero__deco" viewBox="0 0 60 46" aria-hidden="true">
+            <path d="M5 42 C 9 26, 22 11, 47 8" fill="none" stroke="var(--coral)" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M38 3 L48 7 L44 17" fill="none" stroke="var(--coral)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+
+          <figcaption class="hero__credit">
+            Nam Anh — giảng viên đại học, creator đứng sau hệ sinh thái Namanhsuit
+          </figcaption>
+        </figure>
+
       </div>
-
-      <figure class="hero__video" id="video">
-        <!-- TODO: khi có video giới thiệu, bọc .hero__player bằng <a> và thêm lại nút play -->
-        <div class="hero__player">
-          <img src="assets/img/nam-anh-speaking.jpg" alt="Nam Anh chia sẻ tại một buổi workshop trực tiếp" width="1280" height="720" fetchpriority="high" decoding="async">
-        </div>
-
-        <svg class="hero__deco" viewBox="0 0 60 46" aria-hidden="true">
-          <path d="M5 42 C 9 26, 22 11, 47 8" fill="none" stroke="var(--coral)" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M38 3 L48 7 L44 17" fill="none" stroke="var(--coral)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-
-        <figcaption class="hero__credit">
-          Nam Anh — giảng viên đại học, creator đứng sau hệ sinh thái Namanhsuit
-        </figcaption>
-      </figure>
 
       <ul class="hero__tags" aria-label="Về Nam Anh">
         <li><b class="num" data-count="200K+">200K+</b> theo dõi</li>
@@ -623,7 +625,7 @@
           <li>
             <b>1</b>
             <div>
-              <h3>Nộp đơn đăng ký</h3>
+              <h3>Điền form</h3>
               <p>
                 Hai phút. Một khảo sát ngắn về thế mạnh, mục tiêu, và lợi thế
                 "unfair advantage" của bạn khi xây dựng thương hiệu cá nhân.
@@ -636,7 +638,7 @@
           <li>
             <b>2</b>
             <div>
-              <h3>Đặt lịch phỏng vấn</h3>
+              <h3>Đặt lịch meeting</h3>
               <p>
                 Nếu bạn phù hợp với Kênh Tay Trái, bạn sẽ nhận email đặt lịch
                 cho buổi meeting đầu tiên — nơi mình và bạn sẽ cùng thảo luận
