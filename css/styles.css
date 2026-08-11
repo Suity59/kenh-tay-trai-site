@@ -1,0 +1,1288 @@
+/* ==========================================================================
+   Kênh Tay Trái — Editorial Warm Clean
+   Design system: 04_Resources/Design System — Marketing/
+   Luật cứng: nền kem #F3EDE9 · CTA mint chữ mực · ĐÚNG 1 shadow 6px 6px 0 #000
+   (thẻ anchor) · card 16px hairline · active state đen đặc · tối đa 2 accent/section
+   ========================================================================== */
+
+/* -------- Fonts -------- */
+@font-face { font-family:'SVN-Recoleta'; src:url('../fonts/SVN-Recoleta SemiBold.otf') format('opentype'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face { font-family:'SVN-Recoleta'; src:url('../fonts/SVN-Recoleta Bold.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'SVN-Gilroy'; src:url('../fonts/SVN-Gilroy Light.otf') format('opentype'); font-weight:300; font-style:normal; font-display:swap; }
+@font-face { font-family:'SVN-Gilroy'; src:url('../fonts/SVN-Gilroy Regular.otf') format('opentype'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'SVN-Gilroy'; src:url('../fonts/SVN-Gilroy Medium.otf') format('opentype'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'SVN-Gilroy'; src:url('../fonts/SVN-Gilroy SemiBold.otf') format('opentype'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face { font-family:'SVN-Gilroy'; src:url('../fonts/SVN-Gilroy Bold.otf') format('opentype'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'SVN-Gilroy'; src:url('../fonts/SVN-Gilroy XBold.otf') format('opentype'); font-weight:800; font-style:normal; font-display:swap; }
+
+/* -------- Tokens -------- */
+:root{
+  /* accent — vai trò khóa cứng */
+  --mint:#79D287;      --mint-soft:#B3E8BB;   --mint-hover:#6BC77A;
+  --coral:#FD976D;     --coral-soft:#FDC7B1;
+  --yellow:#FDD46B;    --yellow-soft:#FEE7A8;
+  --sky:#5DCDF1;       --sky-soft:#BFE7F7;
+  --lavender:#C9B1FB;  --lavender-soft:#E3D6FD;
+  /* foreground */
+  --fg-1:#1B1624; --fg-2:#54505B; --fg-3:#76737C; --fg-4:#8D8A91;
+  /* surface */
+  --bg-1:#FFFFFF; --bg-2:#F9F6F3; --bg-3:#F3EDE9; --bg-4:#ECE5E1;
+  /* semantic */
+  --positive:#00D084; --focus:#0693E3;
+  /* structure alpha */
+  --hairline:rgba(27,22,36,0.10);
+  --row:rgba(27,22,36,0.06);
+  --hover:rgba(27,22,36,0.03);
+  --label:rgba(27,22,36,0.45);
+  /* type */
+  --font-head:'SVN-Recoleta',Georgia,serif;
+  --font-body:'SVN-Gilroy',Arial,sans-serif;
+  --step-hero:clamp(2.375rem,1.6rem + 2.6vw,3.75rem);
+  --step-h2:clamp(2rem,1.3rem + 2.9vw,3.75rem);
+  --step-h3:clamp(1.5rem,1.15rem + 1.4vw,2.25rem);
+  --step-h4:clamp(1.25rem,1.1rem + 0.6vw,1.5rem);
+  --step-body:clamp(1rem,0.96rem + 0.18vw,1.125rem);
+  /* spacing */
+  --sp-section:clamp(4rem,2.5rem + 6vw,7.5rem);
+  --container:1200px; --narrow:760px;
+  --pad-x:clamp(1.25rem,4vw,3rem);
+  --nav-h:68px;
+  /* radius */
+  --r-card:16px; --r-anchor:20px; --r-input:8px; --r-pill:9999px;
+  /* shadow duy nhất của trang */
+  --shadow-anchor:6px 6px 0 #000;
+}
+
+/* -------- Reset -------- */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  font-family:var(--font-body); font-weight:400; font-size:var(--step-body);
+  line-height:1.6; color:var(--fg-1); background:var(--bg-3);
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  font-feature-settings:"kern" 1,"liga" 1;
+  overflow-x:clip;
+}
+img,svg{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;}
+ul{list-style:none;}
+h1,h2,h3,h4{font-family:var(--font-head);font-weight:600;line-height:1.12;letter-spacing:-0.01em;}
+strong,b{font-weight:700;}
+:focus-visible{outline:3px solid rgba(6,147,227,0.4);outline-offset:2px;border-radius:4px;}
+.num{font-variant-numeric:tabular-nums;}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+
+/* -------- Layout helpers -------- */
+.container{max-width:var(--container);margin-inline:auto;padding-inline:var(--pad-x);}
+.narrow{max-width:var(--narrow);margin-inline:auto;}
+.section{padding-block:var(--sp-section);}
+section[id]{scroll-margin-top:calc(var(--nav-h) + 12px);}
+.bg-cream{background:var(--bg-3);}
+.bg-white{background:var(--bg-1);}
+.bg-ivory{background:var(--bg-2);}
+.bg-ink{background:var(--fg-1);color:#EDEAF1;}
+
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;
+  color:var(--label);margin-bottom:18px;
+}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--coral);border-radius:2px;}
+.eyebrow--center{justify-content:center;}
+.eyebrow--center::before{width:7px;height:7px;border-radius:50%;}
+
+/* chữ ký: underline coral */
+.mark{position:relative;white-space:nowrap;}
+/* Màn hẹp: cụm dài phải xuống dòng được, không thì tràn ngang.
+   Underline nền-gradient vẫn vẽ đúng trên từng dòng. */
+@media (max-width:720px){
+  .mark{white-space:normal;}
+}
+/* cụm dài (>3 chữ) cần xuống dòng được — underline vẫn chạy theo từng dòng */
+.mark--wrap{white-space:normal;}
+.mark--underline{
+  text-decoration:underline;text-decoration-color:var(--coral);
+  text-decoration-thickness:5px;text-underline-offset:0.22em;text-decoration-skip-ink:none;
+}
+
+/* [hidden] phải thắng mọi display do class đặt (vd .btn{display:inline-flex}) */
+[hidden]{display:none !important;}
+
+/* -------- Buttons (không shadow) -------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:var(--font-body);font-weight:600;font-size:1rem;line-height:1;
+  padding:16px 30px;border-radius:var(--r-pill);
+  border:1.75px solid var(--fg-1);white-space:nowrap;
+  transition:transform .15s ease,background-color .15s ease,color .15s ease;
+}
+.btn:active{transform:translateY(1px);}
+.btn--mint{background:var(--mint);color:var(--fg-1);}
+.btn--mint:hover{background:var(--mint-hover);transform:translateY(-1px);}
+.btn--outline{background:transparent;color:var(--fg-1);}
+.btn--outline:hover{background:var(--fg-1);color:#fff;transform:translateY(-1px);}
+.btn--dark{background:var(--fg-1);color:#fff;border-color:var(--fg-1);}
+.btn--sm{padding:11px 20px;font-size:0.9375rem;}
+
+/* link hành động = sky */
+.link-action{
+  display:inline-flex;align-items:center;gap:6px;font-weight:600;
+  color:var(--fg-1);
+  text-decoration:underline;text-decoration-color:var(--sky);
+  text-decoration-thickness:2px;text-underline-offset:5px;
+  transition:text-decoration-color .15s ease,gap .15s ease;
+}
+.link-action:hover{text-decoration-color:var(--fg-1);gap:10px;}
+
+/* ==========================================================================
+   NAV
+   ========================================================================== */
+.nav{
+  position:sticky;top:0;z-index:50;
+  height:var(--nav-h);
+  background:rgba(243,237,233,0.88);
+  backdrop-filter:saturate(140%) blur(10px);
+  -webkit-backdrop-filter:saturate(140%) blur(10px);
+  border-bottom:1px solid transparent;
+  transition:border-color .2s ease;
+}
+.nav.is-stuck{border-bottom-color:var(--hairline);}
+/* Thanh tiến độ đọc trang — chỉ báo, không chiếm quyền cuộn */
+.nav__progress{
+  position:absolute;left:0;right:0;bottom:-1px;height:3px;
+  background:var(--mint);transform:scaleX(0);transform-origin:left center;
+  will-change:transform;pointer-events:none;
+}
+.nav__inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.nav__brand{display:flex;align-items:baseline;gap:9px;}
+.nav__brand b{font-family:var(--font-head);font-weight:700;font-size:1.125rem;letter-spacing:-0.02em;}
+.nav__brand span{font-size:12px;font-weight:500;color:var(--fg-3);}
+.nav__links{display:flex;align-items:center;gap:28px;}
+.nav__links a{font-size:0.9375rem;font-weight:500;color:var(--fg-2);transition:color .15s ease;}
+.nav__links a:hover{color:var(--fg-1);}
+@media (max-width:860px){ .nav__links a:not(.btn){display:none;} }
+@media (max-width:520px){ .nav__brand span{display:none;} }
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.hero{
+  padding-block:clamp(3rem,2rem + 5vw,5.5rem) clamp(3rem,2rem + 5vw,5.5rem);
+  text-align:center;
+}
+.hero__copy{max-width:880px;margin-inline:auto;}
+.hero .eyebrow{justify-content:center;}
+.hero h1{font-size:var(--step-hero);margin-bottom:22px;text-wrap:balance;}
+.hero__sub{
+  font-size:clamp(1rem,0.96rem + 0.28vw,1.1875rem);
+  color:var(--fg-2);max-width:60ch;margin:0 auto 34px;
+}
+.hero__actions{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;}
+
+/* ---- Ảnh hero: thẻ anchor DUY NHẤT có shadow trên trang ---- */
+.hero__video{position:relative;max-width:900px;margin:clamp(2.5rem,5vw,4rem) auto 0;}
+.hero__player{
+  display:block;position:relative;overflow:hidden;
+  border-radius:var(--r-anchor);border:2px solid var(--fg-1);
+  box-shadow:var(--shadow-anchor);background:var(--fg-1);
+}
+.hero__player img{
+  width:100%;aspect-ratio:16/9;object-fit:cover;object-position:center 30%;
+}
+/* nét vẽ tay coral chỉ lên ảnh, nằm cạnh dòng credit */
+.hero__deco{
+  position:absolute;left:-34px;bottom:-12px;width:78px;height:auto;pointer-events:none;
+}
+@media (max-width:1120px){ .hero__deco{left:-6px;bottom:-14px;width:64px;} }
+.hero__credit{margin-top:18px;font-size:0.9375rem;color:var(--fg-3);}
+
+/* ---- Tag uy tín ---- */
+.hero__tags{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:12px;
+  max-width:900px;margin:clamp(1.75rem,3.5vw,2.5rem) auto 0;
+  padding-top:clamp(1.5rem,3vw,2rem);border-top:1px solid var(--hairline);
+}
+.hero__tags li{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:9px 18px;border-radius:var(--r-pill);
+  background:var(--bg-1);border:1px solid var(--hairline);
+  font-size:0.9375rem;font-weight:500;color:var(--fg-2);
+}
+.hero__tags li::before{
+  content:"";width:8px;height:8px;border-radius:50%;
+  background:var(--lavender);flex:none;
+}
+.hero__tags b{
+  font-family:var(--font-head);font-weight:700;font-size:1.0625rem;color:var(--fg-1);
+  font-variant-numeric:tabular-nums;
+}
+
+.hero__disclaimer{margin-top:20px;font-size:0.75rem;color:var(--fg-4);}
+
+@media (max-width:640px){
+  .hero h1 br{display:none;}
+  .hero__actions .btn{width:100%;}
+  .hero__deco{display:none;}
+}
+
+/* ==========================================================================
+   SECTION 2 — LÝ DO (một sự thật ít ai nói ra)
+   ========================================================================== */
+.reasons__inner{max-width:700px;text-align:center;}
+
+.reasons__title{
+  font-size:var(--step-h2);line-height:1.16;margin:20px auto 36px;
+}
+.reasons__title em{
+  display:block;margin-top:6px;font-style:italic;color:var(--coral);
+}
+
+.reasons__body{
+  font-size:clamp(1rem,0.96rem + 0.22vw,1.125rem);
+  color:var(--fg-2);line-height:1.65;
+  max-width:56ch;margin:0 auto 24px;
+}
+.reasons__closing{margin-top:32px;color:var(--fg-1);font-weight:500;}
+
+.reasons__list{
+  display:inline-block;text-align:left;margin:8px auto 28px;
+}
+.reasons__list li{
+  position:relative;padding-left:24px;margin-bottom:14px;
+  font-size:clamp(1rem,0.96rem + 0.22vw,1.125rem);color:var(--fg-2);
+}
+.reasons__list li:last-child{margin-bottom:0;}
+/* Tile nền trung tính (không tốn ngân sách accent — section này đã dùng coral)
+   Marker ✕ vì đây là list "bạn sẽ KHÔNG cần", chấm tròn đọc nhầm thành checklist */
+.reasons__list li{
+  background:var(--bg-2);border:1px solid var(--hairline);
+  border-radius:var(--r-card);
+  padding:14px 18px 14px 46px;margin-bottom:10px;
+}
+.reasons__list li::before{
+  content:"";position:absolute;left:18px;top:50%;transform:translateY(-50%);
+  width:16px;height:16px;
+  background:no-repeat center/16px 16px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 4l8 8M12 4l-8 8' stroke='%23FD976D' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+
+/* ==========================================================================
+   SECTION 3 — VỀ NAM ANH (thương hiệu cá nhân đổi đời)
+   ========================================================================== */
+.story__title{
+  font-size:var(--step-h2);line-height:1.18;text-align:center;
+  max-width:820px;margin:0 auto clamp(3rem,6vw,4.5rem);
+}
+
+.story__grid{
+  display:grid;grid-template-columns:0.85fr 1.15fr;
+  gap:clamp(2.5rem,6vw,5rem);align-items:start;
+}
+
+/* ---- Collage ảnh (không shadow — ngân sách shadow của trang đã dùng ở hero) ---- */
+.story__collage{position:relative;max-width:420px;}
+.story__photo{
+  border-radius:var(--r-card);overflow:hidden;border:1px solid var(--hairline);background:var(--bg-1);
+}
+.story__photo img{width:100%;height:100%;object-fit:cover;display:block;}
+
+.story__photo--main{
+  width:78%;aspect-ratio:4/5;margin-left:auto;
+  border-radius:20px 20px 20px 4px;
+}
+.story__photo--small{
+  position:absolute;left:0;top:32%;width:38%;aspect-ratio:1/1;z-index:2;
+  border-radius:16px;
+}
+.story__photo--bottom{
+  width:62%;aspect-ratio:4/3;margin-top:20px;
+  border-radius:4px 20px 20px 20px;
+}
+
+/* deco: sao nhỏ lavender ở khoảng trống trên–trái, mũi tên coral ở trống dưới–phải */
+.story__deco{position:absolute;width:30px;height:30px;pointer-events:none;}
+.story__deco--1{top:0;left:0;}
+.story__deco--arrow{
+  width:66px;height:50px;left:auto;right:3%;bottom:4%;
+}
+@media (max-width:860px){
+  .story__deco--arrow{width:54px;height:41px;right:1%;}
+}
+
+/* ---- Copy ---- */
+.story__copy p{
+  font-size:clamp(1rem,0.96rem + 0.2vw,1.0625rem);
+  line-height:1.7;color:var(--fg-2);margin-bottom:22px;
+}
+.story__copy p:last-child{margin-bottom:0;}
+.story__copy strong{color:var(--fg-1);}
+
+@media (max-width:860px){
+  .story__grid{grid-template-columns:1fr;}
+  .story__collage{max-width:340px;margin-inline:auto;margin-bottom:1rem;}
+}
+
+/* ---- Highlight inline (vai trò yellow: nhấn cụm số trong câu) ---- */
+.hl{
+  background:linear-gradient(to bottom, transparent 62%, var(--yellow-soft) 62%);
+  padding:0 2px;font-weight:700;
+}
+
+/* ---- Câu đúc kết hành trình ---- */
+.story__milestone{
+  font-size:var(--step-h3);line-height:1.35;text-align:center;
+  max-width:900px;margin:clamp(4rem,8vw,6rem) auto clamp(2.5rem,5vw,3.5rem);
+}
+
+/* ---- Biểu đồ hành trình ---- */
+.journey{max-width:960px;margin:0 auto;}
+.journey__label{
+  text-align:center;font-size:0.9375rem;color:var(--fg-3);margin-bottom:20px;
+}
+.journey__label strong{color:var(--fg-1);font-family:var(--font-head);}
+
+.journey__chart{
+  position:relative;background:var(--bg-2);border:1px solid var(--hairline);
+  border-radius:var(--r-anchor);padding:clamp(1.5rem,4vw,2.5rem) clamp(1.5rem,5vw,3rem) 3.5rem;
+  overflow:hidden;
+}
+.journey__line{width:100%;height:auto;display:block;}
+
+.journey__icon{
+  position:absolute;left:var(--x);top:var(--y);
+  font-size:clamp(1.25rem,2.4vw,1.75rem);
+  transform:rotate(var(--r));opacity:0.9;pointer-events:none;
+}
+
+.journey__callout{
+  position:absolute;background:var(--bg-1);border:1.5px solid var(--fg-1);
+  border-radius:var(--r-card);padding:9px 14px;font-size:0.8125rem;line-height:1.4;
+  color:var(--fg-2);white-space:nowrap;
+}
+.journey__callout b{font-family:var(--font-head);color:var(--fg-1);}
+.journey__callout--start{left:clamp(1.25rem,4vw,2.5rem);bottom:3.6rem;}
+.journey__callout--end{right:clamp(1.25rem,4vw,2.5rem);top:clamp(1rem,3vw,1.5rem);}
+
+.journey__axis{
+  position:absolute;left:0;right:0;bottom:1.1rem;
+  display:flex;justify-content:space-between;
+  padding:0 clamp(1.5rem,5vw,3rem);
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;
+  color:var(--label);
+}
+
+@media (max-width:640px){
+  .journey__callout{font-size:0.75rem;padding:7px 10px;}
+  .journey__callout--start{bottom:3.2rem;}
+  .journey__icon{display:none;}
+}
+
+/* Badge decorative — vai trò khóa của Lavender */
+.badge-lav{
+  display:inline-block;background:var(--lavender-soft);
+  border:1.5px solid var(--fg-1);border-radius:var(--r-pill);
+  padding:5px 14px;margin-bottom:14px;
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;
+  color:var(--fg-1);
+}
+
+/* ---- Đoạn kết + thu nhập thụ động ---- */
+.story__outro{
+  max-width:700px;margin:clamp(3rem,6vw,4rem) auto 0;text-align:center;
+}
+.story__outro p{
+  font-size:clamp(1rem,0.96rem + 0.2vw,1.0625rem);
+  line-height:1.7;color:var(--fg-2);margin-bottom:22px;
+}
+
+/* bảng thu nhập đã gộp vào chân từng thẻ ảnh — xem .story__proof figcaption */
+
+.story__proof{
+  position:relative;
+  /* phá khung 700px của .story__outro để ảnh đủ lớn, số đọc được */
+  width:min(1120px,calc(100vw - 2 * var(--pad-x)));
+  margin:26px 0 38px 50%;transform:translateX(-50%);
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:clamp(1.25rem,3.4vw,3rem);align-items:start;
+}
+
+/* đường đứt nét nối 3 ảnh — nằm dưới card, chỉ lộ ra ở khoảng hở */
+.story__proof-links{
+  position:absolute;inset:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;overflow:visible;
+}
+.story__proof-links path{
+  fill:none;stroke:var(--fg-4);stroke-width:2;
+  stroke-dasharray:6 8;stroke-linecap:round;
+  vector-effect:non-scaling-stroke;
+}
+
+.story__proof-card{
+  position:relative;z-index:1;
+  background:var(--bg-1);border:1px solid var(--hairline);
+  border-radius:var(--r-card);padding:10px 10px 0;
+}
+.story__proof-card--a{margin-top:30px;transform:rotate(-1.5deg);}
+.story__proof-card--b{transform:rotate(1deg);}
+.story__proof-card--c{margin-top:22px;transform:rotate(-1deg);}
+
+.story__shot{
+  position:relative;border-radius:10px;overflow:hidden;background:var(--bg-2);
+}
+.story__shot img{width:100%;height:auto;display:block;}
+
+/* khoanh tay vẽ vào đúng con số — nằm trong ảnh, không chạm caption */
+.story__ring{position:absolute;overflow:visible;pointer-events:none;}
+.story__ring path{
+  fill:none;stroke:var(--coral);stroke-width:2.5;stroke-linecap:round;
+  vector-effect:non-scaling-stroke;
+}
+
+/* nhãn nguồn thu + con số, nằm ngay dưới ảnh chứng minh */
+.story__proof figcaption{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  padding:13px 6px 12px;
+}
+.story__proof figcaption span{font-size:0.9375rem;color:var(--fg-2);}
+.story__proof figcaption b{
+  font-family:var(--font-head);font-weight:700;font-size:1.125rem;color:var(--fg-1);
+}
+
+@media (max-width:760px){
+  .story__proof{grid-template-columns:1fr;max-width:400px;gap:18px;}
+  .story__proof-links{display:none;}
+  .story__proof-card{margin-top:0;transform:none;}
+}
+
+.story__cta{margin-top:8px;}
+
+/* ==========================================================================
+   SECTION 4 — SO SÁNH (làm thêm ngoài giờ vs Kênh Tay Trái)
+   ========================================================================== */
+.compare__inner{max-width:1000px;}
+.compare__title{
+  font-size:var(--step-h2);line-height:1.2;text-align:center;
+  max-width:760px;margin:0 auto 24px;
+}
+.compare__intro{
+  font-size:clamp(1rem,0.96rem + 0.2vw,1.0625rem);
+  color:var(--fg-2);line-height:1.7;text-align:center;
+  max-width:680px;margin:0 auto clamp(3rem,6vw,4rem);
+}
+
+.compare__grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(1rem,3vw,1.75rem);align-items:stretch;
+}
+.compare__col{
+  background:var(--bg-2);border:1px solid var(--hairline);
+  border-radius:var(--r-anchor);padding:clamp(1.5rem,3vw,2.25rem);
+}
+/* Cột thắng nhấn bằng nền trung tính đậm hơn một nhịp + viền mực 2px
+   (luật "active state đen đặc"). Không tô màu accent lên nền — accent chỉ
+   nằm ở gạch chân tiêu đề, chip ✓, và câu chốt. */
+.compare__col--highlight{
+  background:var(--bg-3);border-color:var(--fg-1);border-width:2px;
+}
+
+.compare__colhead{
+  font-size:1.25rem;margin-bottom:22px;
+}
+.compare__col--highlight .compare__colhead .mark--underline{
+  font-style:italic;
+}
+
+.compare__list li{
+  position:relative;padding:14px 0 14px 30px;
+  border-top:1px solid var(--hairline);
+  font-size:0.9375rem;color:var(--fg-2);line-height:1.5;
+}
+.compare__list li:first-child{border-top:none;padding-top:0;}
+
+/* Cột trái: ✕ xám nhạt */
+.compare__list li::before{
+  content:"";position:absolute;left:0;top:1.15em;
+  width:14px;height:14px;background:no-repeat center/14px 14px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 4l8 8M12 4l-8 8' stroke='%238D8A91' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+}
+.compare__list li:first-child::before{top:0.28em;}
+
+/* Cột phải: ✓ mực trong chip mint-soft */
+.compare__col--highlight .compare__list li::before{
+  width:18px;height:18px;left:-2px;border-radius:50%;
+  background-color:var(--mint-soft);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.4l2.6 2.6L12 5.4' fill='none' stroke='%231B1624' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-size:11px 11px;background-position:center;background-repeat:no-repeat;
+}
+.compare__col--highlight .compare__list li{padding-left:32px;}
+.compare__final{
+  font-weight:700;color:var(--fg-1);font-family:var(--font-head);
+}
+.compare__col--highlight .compare__final{color:var(--coral);}
+
+@media (max-width:760px){
+  .compare__grid{grid-template-columns:1fr;}
+}
+
+/* ==========================================================================
+   SECTION 5 — LỘ TRÌNH (3 giai đoạn)
+   ========================================================================== */
+.roadmap__title{
+  font-size:var(--step-h2);line-height:1.2;text-align:center;
+  max-width:760px;margin:0 auto 24px;
+}
+.roadmap__title em{font-style:italic;color:var(--coral);}
+
+.roadmap__intro{
+  font-size:clamp(1rem,0.96rem + 0.2vw,1.0625rem);
+  color:var(--fg-2);line-height:1.7;text-align:center;
+  max-width:680px;margin:0 auto clamp(3rem,6vw,4rem);
+}
+
+.roadmap__grid{
+  display:grid;grid-template-columns:0.85fr 1.6fr;
+  gap:clamp(1.5rem,3vw,2rem);align-items:start;
+  max-width:1080px;margin-inline:auto;
+}
+
+/* ---- Tabs chọn giai đoạn ---- */
+.roadmap__tabs{display:flex;flex-direction:column;gap:12px;}
+.roadmap__tab{
+  display:grid;grid-template-columns:auto 1fr;
+  grid-template-areas:"num label" "num name";
+  gap:2px 14px;align-items:center;
+  text-align:left;padding:18px 22px;border-radius:var(--r-card);
+  background:var(--bg-2);border:1px solid var(--hairline);
+  transition:background-color .18s ease,border-color .18s ease;
+}
+/* Chip số tròn — vai trò khóa của Yellow: "số thứ tự tròn" */
+.roadmap__tab .tab-num{
+  grid-area:num;align-self:center;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:30px;height:30px;border-radius:50%;flex:none;
+  background:var(--yellow);color:var(--fg-1);
+  font-style:normal;font-weight:700;font-size:0.875rem;
+  font-variant-numeric:tabular-nums;
+}
+.roadmap__tab span{
+  grid-area:label;
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;
+  color:var(--fg-3);
+}
+.roadmap__tab b{
+  grid-area:name;
+  font-family:var(--font-head);font-weight:700;font-size:1.25rem;color:var(--fg-1);
+}
+.roadmap__tab:hover{border-color:var(--fg-3);}
+.roadmap__tab.is-active{background:var(--fg-1);border-color:var(--fg-1);}
+.roadmap__tab.is-active span{color:#B8B4BF;}
+.roadmap__tab.is-active b{color:#fff;}
+
+/* ---- Panel nội dung ---- */
+.roadmap__panel{
+  background:var(--bg-1);border:1px solid var(--hairline);border-radius:var(--r-anchor);
+  padding:clamp(1.75rem,4vw,2.75rem);min-height:420px;
+}
+.roadmap__pane{display:none;}
+.roadmap__pane.is-active{display:block;}
+.roadmap__pane h3{
+  font-size:var(--step-h4);line-height:1.3;margin-bottom:18px;max-width:34ch;
+}
+.roadmap__pane p{
+  font-size:0.9375rem;line-height:1.7;color:var(--fg-2);margin-bottom:20px;
+}
+.roadmap__label{
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;
+  color:var(--label);margin-bottom:14px;
+}
+
+.roadmap__checklist{display:flex;flex-direction:column;gap:12px;}
+.roadmap__checklist li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:0.9375rem;line-height:1.5;color:var(--fg-2);
+}
+.roadmap__checklist li::before{
+  content:"✓";flex:none;width:20px;height:20px;margin-top:1px;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--fg-1);color:#fff;border-radius:50%;font-size:11px;font-weight:700;
+}
+
+@media (max-width:820px){
+  .roadmap__grid{grid-template-columns:1fr;}
+  /* min-width:0 để grid item co lại được, không thì overflow-x không ăn và trang tràn ngang */
+  .roadmap__tabs{
+    flex-direction:row;overflow-x:auto;min-width:0;
+    scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  .roadmap__tabs::-webkit-scrollbar{display:none;}
+  .roadmap__tab{flex:0 0 auto;min-width:150px;}
+}
+
+/* ==========================================================================
+   SECTION 6 — BA ĐIỀU KHÁC BIỆT (lộ trình / coaching / cộng đồng)
+   ========================================================================== */
+.pillars__title{
+  font-size:var(--step-h2);line-height:1.2;text-align:center;
+  max-width:760px;margin:0 auto 24px;
+}
+.pillars__intro{
+  font-size:clamp(1rem,0.96rem + 0.2vw,1.0625rem);
+  color:var(--fg-2);line-height:1.7;text-align:center;
+  max-width:680px;margin:0 auto clamp(2.5rem,5vw,3.5rem);
+}
+
+.pillars__tabs{
+  display:flex;justify-content:center;flex-wrap:wrap;gap:10px;
+  margin-bottom:clamp(2rem,4vw,2.75rem);
+}
+.pillars__tab{
+  padding:13px 26px;border-radius:var(--r-pill);
+  border:1.5px solid var(--fg-1);font-weight:600;font-size:0.9375rem;
+  background:transparent;color:var(--fg-1);
+  transition:background-color .15s ease,color .15s ease;
+}
+.pillars__tab:hover{background:var(--hover);}
+.pillars__tab.is-active{background:var(--fg-1);color:#fff;}
+
+.pillars__panel{max-width:720px;margin-inline:auto;text-align:center;}
+.pillars__pane{display:none;}
+.pillars__pane.is-active{display:block;}
+.pillars__pane h3{
+  font-size:var(--step-h4);line-height:1.32;margin-bottom:20px;
+}
+.pillars__pane p{
+  font-size:0.9375rem;line-height:1.7;color:var(--fg-2);margin-bottom:18px;
+}
+.pillars__pane p:last-child{margin-bottom:0;}
+.pillars__flag{
+  font-size:0.75rem;font-weight:700;color:var(--coral);
+  border:1px solid var(--coral-soft);border-radius:var(--r-pill);
+  padding:2px 8px;white-space:nowrap;
+}
+
+/* ---- Pane dạng split (Coaching): panel nới rộng + căn trái ---- */
+.pillars__panel.is-split{max-width:1000px;text-align:left;}
+.pillars__split{
+  display:grid;grid-template-columns:1.3fr 0.9fr;
+  gap:clamp(2rem,4vw,3rem);align-items:start;text-align:left;
+}
+.pillars__split-text h3{font-size:var(--step-h4);line-height:1.32;margin-bottom:22px;}
+
+.pillars__numbered{display:flex;flex-direction:column;}
+.pillars__numbered li{
+  display:flex;gap:18px;padding:20px 0;border-top:1px solid var(--hairline);
+}
+.pillars__numbered li:first-child{border-top:none;padding-top:0;}
+.pillars__numbered b{
+  flex:none;font-family:var(--font-head);font-weight:700;font-size:1.25rem;
+  color:var(--coral);line-height:1.4;
+}
+.pillars__numbered li div{font-size:0.9375rem;line-height:1.65;color:var(--fg-2);}
+.pillars__numbered li div a{
+  color:var(--fg-1);font-weight:600;
+  text-decoration:underline;text-decoration-color:var(--sky);
+  text-decoration-thickness:2px;text-underline-offset:3px;
+}
+.pillars__numbered li div a:hover{text-decoration-color:var(--fg-1);}
+
+/* ---- Thẻ bên phải — khuôn chung cho cả 3 tab ----
+   Eyebrow → Ảnh/placeholder → Tiêu đề ngắn → Câu mô tả → Box nhấn đáy */
+.pillars__card{
+  background:var(--bg-2);border:1px solid var(--hairline);border-radius:var(--r-anchor);
+  padding:clamp(1.5rem,3vw,1.75rem);display:flex;flex-direction:column;height:100%;
+}
+.pillars__card .eyebrow{margin-bottom:16px;}
+
+.pillars__card-photo{
+  border-radius:var(--r-card);overflow:hidden;margin-bottom:16px;aspect-ratio:4/3;
+}
+.pillars__card-photo img{width:100%;height:100%;object-fit:cover;object-position:center 25%;}
+.pillars__card-photo--placeholder{
+  border:1.5px dashed var(--fg-4);background:var(--lavender-soft);
+  display:flex;align-items:center;justify-content:center;
+}
+.pillars__card-photo--placeholder span{
+  font-size:0.8125rem;font-weight:700;color:var(--fg-3);text-align:center;padding:0 16px;
+}
+
+.pillars__card h4{
+  font-family:var(--font-head);font-weight:700;font-size:1.125rem;line-height:1.3;
+  margin-bottom:8px;
+}
+.pillars__card-sub{font-size:0.875rem;color:var(--fg-3);line-height:1.55;margin-bottom:18px;}
+
+.pillars__card-facts{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
+.pillars__card-facts li{display:flex;align-items:center;gap:10px;}
+.pillars__card-icon{
+  flex:none;width:26px;height:26px;border-radius:50%;
+  background:var(--lavender-soft);display:flex;align-items:center;justify-content:center;
+}
+.pillars__card-facts li span:last-child{font-size:0.875rem;color:var(--fg-2);line-height:1.4;}
+
+.pillars__card-box{
+  margin-top:auto;background:var(--bg-1);border:1px solid var(--hairline);
+  border-radius:var(--r-card);padding:16px 18px;
+}
+.pillars__card-box p{font-size:0.875rem;color:var(--fg-2);line-height:1.6;}
+.pillars__card-box--flag{background:var(--coral-soft);border-color:var(--coral);}
+.pillars__card-box--flag p{color:var(--fg-1);font-weight:500;}
+
+/* ---- Mockup chat minh họa cộng đồng (không phải screenshot thật) ---- */
+.mockchat{
+  border-radius:var(--r-card);border:1px solid var(--hairline);overflow:hidden;
+  background:var(--bg-1);margin-bottom:16px;
+}
+.mockchat__bar{
+  display:flex;align-items:center;gap:6px;padding:10px 14px;
+  background:var(--bg-3);border-bottom:1px solid var(--hairline);
+}
+.mockchat__bar span{width:8px;height:8px;border-radius:50%;background:var(--hairline);}
+.mockchat__bar b{
+  margin-left:8px;font-family:var(--font-body);font-weight:700;font-size:0.75rem;color:var(--fg-3);
+}
+.mockchat__body{padding:14px;display:flex;flex-direction:column;gap:12px;}
+.mockchat__msg{display:flex;gap:9px;align-items:flex-start;}
+.mockchat__avatar{
+  flex:none;width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--lavender-soft);   /* avatar = lavender, 1 màu cho cả card */
+  font-family:var(--font-head);font-weight:700;font-size:0.6875rem;color:var(--fg-1);
+}
+.mockchat__bubble b{
+  display:block;font-size:0.75rem;font-weight:700;color:var(--fg-1);margin-bottom:2px;
+}
+.mockchat__bubble p{font-size:0.8125rem;line-height:1.45;color:var(--fg-2);}
+.mockchat__msg--host .mockchat__bubble{
+  background:var(--bg-2);border-radius:var(--r-card);padding:8px 12px;
+}
+.mockchat__msg--host .mockchat__bubble b{color:var(--fg-1);}
+
+@media (max-width:760px){
+  .pillars__split{grid-template-columns:1fr;}
+}
+
+/* ==========================================================================
+   SECTION 7 — QUY TRÌNH ĐĂNG KÝ + FAQ
+   ========================================================================== */
+.apply__grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(2.5rem,5vw,4.5rem);align-items:start;
+}
+.apply__title{font-size:var(--step-h3);line-height:1.22;margin:14px 0 20px;}
+.apply__title--faq{margin-bottom:20px;}
+.apply__intro{font-size:0.9375rem;line-height:1.7;color:var(--fg-2);margin-bottom:32px;}
+
+/* ---- Các bước ---- */
+.apply__steps{display:flex;flex-direction:column;}
+.apply__steps li{
+  display:flex;gap:18px;padding:22px 0;border-top:1px solid var(--hairline);
+}
+.apply__steps li:first-child{border-top:none;padding-top:0;}
+/* Chip số tròn yellow — đồng bộ với số giai đoạn ở Lộ trình */
+.apply__steps b{
+  flex:none;display:inline-flex;align-items:center;justify-content:center;
+  width:34px;height:34px;border-radius:50%;
+  background:var(--yellow);color:var(--fg-1);
+  font-family:var(--font-body);font-weight:700;font-size:1rem;line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.apply__steps h3{font-size:1.0625rem;margin-bottom:6px;}
+.apply__steps p{font-size:0.9375rem;line-height:1.6;color:var(--fg-2);}
+.apply__cta{margin-top:28px;}
+
+/* ---- FAQ accordion ---- */
+.apply__faq{border-top:1px solid var(--hairline);}
+.apply__q{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:18px 2px;border-bottom:1px solid var(--hairline);text-align:left;
+}
+.apply__q span{font-family:var(--font-head);font-weight:700;font-size:1rem;color:var(--fg-1);}
+.apply__q b{
+  flex:none;font-size:1.25rem;font-weight:400;color:var(--fg-3);
+  transition:transform .2s ease;
+}
+.apply__q.is-active b{transform:rotate(45deg);color:var(--coral);}
+/* .apply__a: layout accordion nằm ở khối MOTION cuối file (grid-rows trick) */
+.apply__a p{font-size:0.9375rem;line-height:1.7;color:var(--fg-2);margin-bottom:10px;}
+.apply__a p:last-child{margin-bottom:0;}
+.apply__flag{
+  font-size:0.8125rem;color:var(--coral);background:var(--coral-soft);
+  border-radius:8px;padding:10px 14px;
+}
+
+@media (max-width:900px){
+  .apply__grid{grid-template-columns:1fr;}
+}
+
+/* ==========================================================================
+   SECTION 8 — ĐĂNG KÝ (pop-up, form nhiều bước kiểu Typeform)
+   ========================================================================== */
+.signup-modal{
+  position:fixed;inset:0;z-index:200;
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;visibility:hidden;transition:opacity .25s ease,visibility .25s ease;
+}
+.signup-modal.is-open{opacity:1;visibility:visible;}
+.signup-modal__backdrop{
+  position:absolute;inset:0;background:rgba(27,22,36,0.55);
+  -webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);
+}
+.signup-modal__panel{
+  position:relative;z-index:1;background:var(--bg-3);
+  border-radius:var(--r-anchor);width:100%;max-width:760px;max-height:90vh;
+  overflow-y:auto;padding:clamp(1.75rem,4vw,3rem);
+  transform:translateY(14px);transition:transform .25s ease;
+}
+.signup-modal.is-open .signup-modal__panel{transform:translateY(0);}
+.signup-modal__close{
+  position:absolute;top:16px;right:16px;z-index:2;
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg-1);border:1px solid var(--hairline);
+  transition:background-color .15s ease,transform .15s ease;
+}
+.signup-modal__close:hover{background:var(--bg-2);transform:rotate(90deg);}
+body.no-scroll{overflow:hidden;}
+
+.signup__title{
+  font-size:var(--step-h3);line-height:1.25;text-align:center;
+  max-width:560px;margin:0 auto clamp(2rem,4vw,2.75rem);
+}
+
+.signup__card{
+  position:relative;background:var(--bg-1);border:1px solid var(--hairline);
+  border-radius:var(--r-anchor);padding:clamp(1.5rem,4vw,2.5rem);
+  min-height:380px;overflow:hidden;
+}
+
+.signup__progress{
+  position:absolute;top:0;left:0;right:0;height:4px;background:var(--hairline);
+}
+.signup__progress-bar{
+  height:100%;width:9.09%;background:var(--coral);
+  transition:width .3s ease;
+}
+
+.signup__step{display:none;}
+.signup__step.is-active{display:block;animation:signupIn .3s ease;}
+@keyframes signupIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+.signup__num{
+  font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;
+  color:var(--label);margin-bottom:14px;
+}
+.signup__step h3{
+  font-size:var(--step-h4);line-height:1.34;margin-bottom:12px;max-width:34ch;
+}
+.signup__hint{font-size:0.875rem;color:var(--fg-3);line-height:1.55;margin-bottom:22px;max-width:48ch;}
+
+.signup__choices{display:flex;flex-direction:column;gap:10px;margin-top:6px;}
+.signup__choice{
+  display:flex;align-items:center;gap:12px;padding:14px 16px;
+  border:1.5px solid var(--hairline);border-radius:var(--r-card);
+  cursor:pointer;transition:border-color .15s ease,background-color .15s ease;
+}
+.signup__choice:hover{border-color:var(--fg-3);}
+.signup__choice input{accent-color:var(--fg-1);width:17px;height:17px;flex:none;}
+.signup__choice input:checked ~ span{font-weight:600;}
+.signup__choice:has(input:checked){border-color:var(--fg-1);background:var(--bg-2);}
+.signup__choice span{font-size:0.9375rem;color:var(--fg-1);line-height:1.4;}
+
+.signup__grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.signup__step input[type="text"],
+.signup__step input[type="tel"],
+.signup__step input[type="email"],
+.signup__step textarea{
+  width:100%;font-family:var(--font-body);font-size:1rem;color:var(--fg-1);
+  border:none;border-bottom:1.5px solid var(--hairline);padding:10px 2px;
+  background:transparent;margin-bottom:14px;transition:border-color .15s ease;
+  resize:vertical;
+}
+.signup__step input:focus,
+.signup__step textarea:focus{outline:none;border-color:var(--fg-1);}
+.signup__step input::placeholder,
+.signup__step textarea::placeholder{color:var(--fg-4);}
+
+.signup__step select{
+  width:100%;font-family:var(--font-body);font-size:1rem;color:var(--fg-1);
+  border:none;border-bottom:1.5px solid var(--hairline);padding:10px 26px 10px 2px;
+  background:transparent;margin-bottom:14px;transition:border-color .15s ease;
+  appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='16' height='16'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%2354505B' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 2px center;
+}
+.signup__step select:focus{outline:none;border-color:var(--fg-1);}
+.signup__step select:invalid{color:var(--fg-4);}
+
+.signup__nav{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  margin-top:clamp(1.75rem,4vw,2.5rem);
+}
+.signup__prev{
+  font-size:0.875rem;font-weight:600;color:var(--fg-3);
+  transition:color .15s ease;
+}
+.signup__prev:hover:not(:disabled){color:var(--fg-1);}
+.signup__prev:disabled{opacity:0;pointer-events:none;}
+
+.signup__done{
+  display:none;text-align:center;padding:clamp(2rem,5vw,3rem) 0;
+  position:relative;   /* neo cho hạt pop khi gửi thành công */
+}
+.signup__done.is-active{display:block;}
+/* khoảnh khắc thành công = xanh */
+.signup__done-icon{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:56px;height:56px;border-radius:50%;background:var(--mint);
+  margin-bottom:18px;
+}
+.signup__done h3{font-size:var(--step-h3);margin-bottom:14px;}
+.signup__done p{font-size:1rem;color:var(--fg-2);line-height:1.6;max-width:44ch;margin-inline:auto;}
+
+@media (max-width:560px){
+  .signup__grid2{grid-template-columns:1fr;}
+}
+
+/* ==========================================================================
+   SECTION 9 — CHỐT CUỐI (dark section duy nhất được phép: nền mực #1B1624)
+   ========================================================================== */
+.final__inner{max-width:680px;margin-inline:auto;text-align:center;}
+.final__title{
+  font-size:var(--step-h2);line-height:1.2;color:#fff;
+  margin-bottom:20px;
+}
+.final__em{font-style:italic;}
+.final__sub{
+  font-size:clamp(1rem,0.96rem + 0.22vw,1.125rem);
+  line-height:1.7;color:#B8B4BF;
+  max-width:52ch;margin:0 auto 34px;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.footer{
+  background:#141019;color:#8D8A91;
+  padding-block:clamp(2.5rem,5vw,3.5rem);
+  border-top:1px solid rgba(255,255,255,0.10);
+}
+.footer__inner{
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:20px 32px;
+}
+.footer__brand{display:flex;align-items:baseline;gap:9px;}
+.footer__brand b{
+  font-family:var(--font-head);font-weight:700;font-size:1.0625rem;color:#EDEAF1;
+  letter-spacing:-0.02em;
+}
+.footer__brand span{font-size:12px;color:#76737C;}
+.footer__nav{display:flex;flex-wrap:wrap;gap:22px;}
+.footer__nav a{
+  font-size:0.875rem;color:#B8B4BF;transition:color .15s ease;
+}
+.footer__nav a:hover{color:#fff;}
+.footer__note{
+  flex-basis:100%;font-size:0.75rem;line-height:1.6;color:#76737C;
+  padding-top:18px;border-top:1px solid rgba(255,255,255,0.08);
+}
+
+/* ==========================================================================
+   MOTION — fade-in + slide-up 13px, stagger 80ms, 450ms, chạy 1 lần
+   Luật design system: không parallax, không scroll-jack, không loop vô hạn.
+   ========================================================================== */
+:root{ --ease-out-soft:cubic-bezier(.16,1,.3,1); }
+
+/* Khối cũ (cả section hiện một lượt) — giữ cho chỗ chưa migrate.
+   Chỉ ẩn khi JS đã chạy, không thì tắt JS là cả trang trắng. */
+.js .reveal{opacity:0;transform:translateY(13px);}
+.reveal.is-in{
+  opacity:1;transform:none;
+  transition:opacity .45s var(--ease-out-soft),transform .45s var(--ease-out-soft);
+}
+
+/* Khối mới: stagger từng phần tử con. Chỉ ẩn khi JS đã chạy (fallback no-JS). */
+.js [data-reveal-group] > *{opacity:0;transform:translateY(13px);}
+.js [data-reveal-group] > .rv-in{
+  opacity:1;transform:none;
+  transition:opacity .45s var(--ease-out-soft),transform .45s var(--ease-out-soft);
+}
+/* Khi group chỉ định selector riêng, phần tử con trực tiếp không bị ẩn oan */
+.js [data-reveal-items] > *{opacity:1;transform:none;}
+.js [data-reveal-items] .rv-target{opacity:0;transform:translateY(13px);}
+.js [data-reveal-items] .rv-target.rv-in{opacity:1;transform:none;}
+
+/* ---- Hero cascade khi tải trang ---- */
+@media (prefers-reduced-motion:no-preference){
+  .js .hero__copy > *,
+  .js .hero__video,
+  .js .hero__tags,
+  .js .hero__disclaimer{
+    opacity:0;animation:heroIn .45s var(--ease-out-soft) forwards;
+  }
+  .js .hero__copy > .eyebrow   {animation-delay:.05s;}
+  .js .hero__copy > h1         {animation-delay:.13s;}
+  .js .hero__copy > .hero__sub {animation-delay:.21s;}
+  .js .hero__copy > .hero__actions{animation-delay:.29s;}
+  .js .hero__video             {animation-delay:.37s;}
+  .js .hero__tags              {animation-delay:.45s;}
+  .js .hero__disclaimer        {animation-delay:.53s;}
+}
+@keyframes heroIn{
+  from{opacity:0;transform:translateY(13px);}
+  to{opacity:1;transform:none;}
+}
+
+/* ---- Underline coral vẽ từ trái sang (chữ ký thị giác) ---- */
+.mark--underline{
+  text-decoration:none;
+  background-image:linear-gradient(var(--coral),var(--coral));
+  background-repeat:no-repeat;
+  background-position:0 92%;
+  background-size:100% 5px;          /* mặc định: đã vẽ (an toàn khi no-JS) */
+  padding-bottom:2px;
+}
+.js .mark--underline{background-size:0% 5px;}
+.js .mark--underline.is-drawn{
+  background-size:100% 5px;
+  transition:background-size .6s var(--ease-out-soft) .25s;
+}
+/* Hero: vẽ ngay sau khi cascade chạm h1 (không chờ scroll) */
+@media (prefers-reduced-motion:no-preference){
+  .js .hero h1 .mark--underline{
+    animation:drawUnderline .6s var(--ease-out-soft) .55s forwards;
+  }
+}
+@keyframes drawUnderline{to{background-size:100% 5px;}}
+
+/* ---- SVG hand-drawn tự vẽ nét ---- */
+.js .hero__deco path,
+.js .story__deco--arrow path{stroke-dasharray:160;stroke-dashoffset:160;}
+.js .is-in .story__deco--arrow path{animation:decoDraw .7s ease-out forwards;}
+.js .is-in .story__deco--arrow path:nth-child(2){animation-delay:.45s;}
+/* Hero: vẽ theo nhịp cascade, không chờ scroll */
+@media (prefers-reduced-motion:no-preference){
+  .js .hero__deco path{animation:decoDraw .7s ease-out .6s forwards;}
+  .js .hero__deco path:nth-child(2){animation-delay:1.05s;}
+}
+@keyframes decoDraw{to{stroke-dashoffset:0;}}
+
+/* Ngôi sao lavender pop-in */
+.js .story__deco--1{opacity:0;transform:scale(.5);}
+.js .is-in .story__deco--1{
+  opacity:1;transform:scale(1);
+  transition:opacity .4s ease .2s,transform .4s var(--ease-out-soft) .2s;
+}
+
+/* ---- Mũi tên trong nút/link nhích khi hover ---- */
+.btn span[aria-hidden],
+.link-action span[aria-hidden]{
+  display:inline-block;transition:transform .15s ease;
+}
+.btn:hover span[aria-hidden]{transform:translateX(3px);}
+.link-action:hover span[aria-hidden]{transform:translateY(2px);}
+
+/* ---- Tab pane vào có transition ---- */
+.roadmap__pane.is-active,
+.pillars__pane.is-active{animation:paneIn .3s var(--ease-out-soft);}
+@keyframes paneIn{
+  from{opacity:0;transform:translateY(10px);}
+  to{opacity:1;transform:none;}
+}
+
+/* Checklist ✓ pop khi pane active */
+.roadmap__pane.is-active .roadmap__checklist li{animation:checkPop .35s var(--ease-out-soft) backwards;}
+.roadmap__pane.is-active .roadmap__checklist li:nth-child(1){animation-delay:.10s;}
+.roadmap__pane.is-active .roadmap__checklist li:nth-child(2){animation-delay:.16s;}
+.roadmap__pane.is-active .roadmap__checklist li:nth-child(3){animation-delay:.22s;}
+.roadmap__pane.is-active .roadmap__checklist li:nth-child(4){animation-delay:.28s;}
+@keyframes checkPop{
+  from{opacity:0;transform:translateX(-6px);}
+  to{opacity:1;transform:none;}
+}
+
+/* Tab hover nhích lên */
+.roadmap__tab:hover{transform:translateY(-1px);}
+
+/* ---- Mockchat: gõ "•••" rồi tin nhắn hiện, lần lượt, một lần ----
+   Ẩn ở tầng avatar/bubble chứ KHÔNG ẩn cả .mockchat__msg — nếu ẩn cả hàng thì
+   chấm typing (nằm trong hàng) cũng bị opacity:0 theo và không bao giờ thấy. */
+.js .mockchat .mockchat__msg > .mockchat__avatar,
+.js .mockchat .mockchat__msg > .mockchat__bubble{opacity:0;}
+.js .mockchat.is-played .mockchat__msg > .mockchat__avatar,
+.js .mockchat.is-played .mockchat__msg > .mockchat__bubble{
+  animation:msgIn .4s var(--ease-out-soft) forwards;
+}
+.js .mockchat.is-played .mockchat__msg:nth-child(1) > *{animation-delay:.55s;}
+.js .mockchat.is-played .mockchat__msg:nth-child(2) > *{animation-delay:1.15s;}
+.js .mockchat.is-played .mockchat__msg:nth-child(3) > *{animation-delay:1.75s;}
+@keyframes msgIn{
+  from{opacity:0;transform:translateY(8px);}
+  to{opacity:1;transform:none;}
+}
+
+/* chấm gõ phím — hiện 0.5s ngay trước tin nhắn tương ứng */
+.mockchat__msg{position:relative;}
+.mockchat__dots{display:none;}
+.js .mockchat__dots{
+  display:flex;gap:4px;align-items:center;
+  position:absolute;left:35px;top:7px;opacity:0;
+}
+.mockchat__dots i{
+  width:5px;height:5px;border-radius:50%;background:var(--fg-4);display:block;
+}
+.js .mockchat.is-played .mockchat__msg .mockchat__dots{
+  animation:dotsShow .55s ease forwards;
+}
+.js .mockchat.is-played .mockchat__msg .mockchat__dots i{
+  animation:dotBounce .34s ease-in-out 2;
+}
+.js .mockchat.is-played .mockchat__msg:nth-child(1) .mockchat__dots,
+.js .mockchat.is-played .mockchat__msg:nth-child(1) .mockchat__dots i{animation-delay:0s;}
+.js .mockchat.is-played .mockchat__msg:nth-child(2) .mockchat__dots,
+.js .mockchat.is-played .mockchat__msg:nth-child(2) .mockchat__dots i{animation-delay:.6s;}
+.js .mockchat.is-played .mockchat__msg:nth-child(3) .mockchat__dots,
+.js .mockchat.is-played .mockchat__msg:nth-child(3) .mockchat__dots i{animation-delay:1.2s;}
+/* lệch nhịp 3 chấm — cộng dồn lên delay của từng tin nhắn */
+.js .mockchat.is-played .mockchat__msg:nth-child(1) .mockchat__dots i:nth-child(2){animation-delay:.09s;}
+.js .mockchat.is-played .mockchat__msg:nth-child(1) .mockchat__dots i:nth-child(3){animation-delay:.18s;}
+.js .mockchat.is-played .mockchat__msg:nth-child(2) .mockchat__dots i:nth-child(2){animation-delay:.69s;}
+.js .mockchat.is-played .mockchat__msg:nth-child(2) .mockchat__dots i:nth-child(3){animation-delay:.78s;}
+.js .mockchat.is-played .mockchat__msg:nth-child(3) .mockchat__dots i:nth-child(2){animation-delay:1.29s;}
+.js .mockchat.is-played .mockchat__msg:nth-child(3) .mockchat__dots i:nth-child(3){animation-delay:1.38s;}
+@keyframes dotsShow{
+  0%{opacity:0;} 18%{opacity:1;} 82%{opacity:1;} 100%{opacity:0;}
+}
+@keyframes dotBounce{
+  0%,100%{transform:none;} 50%{transform:translateY(-3px);}
+}
+
+/* ---- Ảnh & card hover (KHÔNG thêm shadow — luật 1 shadow/trang) ---- */
+.story__photo{transition:transform .2s ease,border-color .2s ease;}
+.story__photo:hover{transform:translateY(-2px);border-color:var(--fg-3);}
+
+.story__proof-card{transition:transform .25s var(--ease-out-soft);}
+.story__proof-card:hover{transform:rotate(0deg) translateY(-2px);}
+
+.pillars__card-photo{overflow:hidden;}
+.pillars__card-photo img{transition:transform .4s var(--ease-out-soft);}
+.pillars__card:hover .pillars__card-photo img{transform:scale(1.03);}
+
+/* ---- FAQ accordion mượt (grid-rows trick, không display:none) ---- */
+.apply__q{transition:background-color .15s ease;}
+.apply__q:hover{background:var(--hover);}
+.apply__a{
+  display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows .3s var(--ease-out-soft);
+  border-bottom:1px solid var(--hairline);
+}
+.apply__a > .apply__a-inner{overflow:hidden;min-height:0;}
+.apply__a.is-active{grid-template-rows:1fr;}
+.apply__a .apply__a-inner > *{padding-inline:2px;}
+.apply__a.is-active .apply__a-inner{padding-bottom:22px;}
+
+/* ---- Modal: bước tiến/lùi trượt theo hướng ---- */
+.signup__form[data-dir="next"] .signup__step.is-active{animation:stepNext .3s var(--ease-out-soft);}
+.signup__form[data-dir="prev"] .signup__step.is-active{animation:stepPrev .3s var(--ease-out-soft);}
+@keyframes stepNext{
+  from{opacity:0;transform:translateX(16px);}
+  to{opacity:1;transform:none;}
+}
+@keyframes stepPrev{
+  from{opacity:0;transform:translateX(-16px);}
+  to{opacity:1;transform:none;}
+}
+
+/* Radio đã chọn hiện tick feedback */
+.signup__choice{position:relative;}
+.signup__choice::after{
+  content:"✓";position:absolute;right:16px;top:50%;
+  transform:translateY(-50%) scale(0);
+  font-weight:700;color:var(--fg-1);opacity:0;
+  transition:transform .2s var(--ease-out-soft),opacity .2s ease;
+}
+.signup__choice:has(input:checked)::after{transform:translateY(-50%) scale(1);opacity:1;}
+
+/* Số bước (01/02/03) pop trước phần chữ */
+.js .apply__steps > .rv-in b{animation:numPop .4s var(--ease-out-soft) backwards;}
+@keyframes numPop{
+  from{opacity:0;transform:scale(.6);}
+  to{opacity:1;transform:none;}
+}
+
+/* ---- So sánh: chip ✓ pop lần lượt khi cột thắng lộ ra ---- */
+.js .compare__col--highlight.rv-in .compare__list li::before{
+  animation:chipPop .35s var(--ease-out-soft) backwards;
+}
+.js .compare__col--highlight.rv-in .compare__list li:nth-child(1)::before{animation-delay:.10s;}
+.js .compare__col--highlight.rv-in .compare__list li:nth-child(2)::before{animation-delay:.16s;}
+.js .compare__col--highlight.rv-in .compare__list li:nth-child(3)::before{animation-delay:.22s;}
+.js .compare__col--highlight.rv-in .compare__list li:nth-child(4)::before{animation-delay:.28s;}
+.js .compare__col--highlight.rv-in .compare__list li:nth-child(5)::before{animation-delay:.34s;}
+.js .compare__col--highlight.rv-in .compare__list li:nth-child(6)::before{animation-delay:.40s;}
+@keyframes chipPop{
+  from{opacity:0;transform:scale(.4);}
+  to{opacity:1;transform:none;}
+}
+
+/* ---- Mầm cây tự mọc (motif favicon) — mở đầu section Lộ trình ---- */
+.sprout{
+  display:block;width:46px;height:46px;margin:0 auto 14px;overflow:visible;
+}
+.sprout__stem{stroke:var(--fg-1);stroke-width:3.2;stroke-linecap:round;fill:none;}
+.sprout__leaf{transform-box:view-box;}
+.sprout__leaf--l{transform-origin:16px 17px;}
+.sprout__leaf--r{transform-origin:16px 15px;}
+
+.js .sprout .sprout__stem{stroke-dasharray:13;stroke-dashoffset:13;}
+.js .sprout .sprout__leaf{opacity:0;transform:scale(.2);}
+.js .sprout.is-in .sprout__stem{animation:stemGrow .5s ease-out forwards;}
+.js .sprout.is-in .sprout__leaf--l{animation:leafOut .34s var(--ease-out-soft) .48s forwards;}
+.js .sprout.is-in .sprout__leaf--r{animation:leafOut .34s var(--ease-out-soft) .63s forwards;}
+@keyframes stemGrow{to{stroke-dashoffset:0;}}
+@keyframes leafOut{to{opacity:1;transform:scale(1);}}
+
+/* ---- Hạt pop khi gửi đơn thành công ---- */
+.pop-seed{
+  position:absolute;left:50%;top:38px;width:8px;height:8px;
+  margin:-4px 0 0 -4px;pointer-events:none;
+  animation:seedFly .7s var(--ease-out-soft) forwards;
+}
+@keyframes seedFly{
+  from{opacity:1;transform:translate(0,0) scale(.4) rotate(0deg);}
+  to{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1) rotate(180deg);}
+}
+
+/* ---- Nav scroll-spy ---- */
+.nav__links a.is-current{
+  color:var(--fg-1);font-weight:600;
+  text-decoration:underline;text-decoration-color:var(--sky);
+  text-decoration-thickness:2px;text-underline-offset:6px;
+}
+
+/* ==========================================================================
+   REDUCED MOTION — tắt sạch, giữ nguyên nội dung
+   ========================================================================== */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  .js .reveal,.reveal.is-in,
+  .js [data-reveal-group] > *,
+  .js [data-reveal-items] .rv-target,
+  .js .hero__copy > *,.js .hero__video,.js .hero__tags,.js .hero__disclaimer,
+  .js .mockchat .mockchat__msg > .mockchat__avatar,
+  .js .mockchat .mockchat__msg > .mockchat__bubble,
+  .js .sprout .sprout__leaf{
+    opacity:1 !important;transform:none !important;
+  }
+  .js .mark--underline{background-size:100% 5px !important;}
+  .js .hero__deco path,.js .story__deco--arrow path,
+  .js .sprout .sprout__stem{stroke-dashoffset:0 !important;}
+  .js .story__deco--1{opacity:1 !important;transform:none !important;}
+  /* nét khoanh coral: JS bỏ qua ở chế độ này nên path giữ nguyên đã vẽ */
+  .js .mockchat__dots,.pop-seed{display:none !important;}
+}

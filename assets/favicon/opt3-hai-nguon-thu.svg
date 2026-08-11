@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#1B1624"/>
+  <!-- Một nguồn tách làm hai — nhánh mint là nguồn thu thứ hai -->
+  <g fill="none" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 27 V17" stroke="#F3EDE9"/>
+    <path d="M16 17 L9 9" stroke="#F3EDE9"/>
+    <path d="M16 17 L23 9" stroke="#79D287"/>
+  </g>
+  <circle cx="23" cy="8" r="3.2" fill="#79D287"/>
+</svg>

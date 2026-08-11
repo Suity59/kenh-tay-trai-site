@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="7" fill="#FD976D"/>
+  <!-- Mũi tên rẽ trái — chơi chữ "tay trái", nét vẽ tay đúng chữ ký brand -->
+  <g fill="none" stroke="#1B1624" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M25 24 C 25 15, 21 11, 11 11"/>
+    <path d="M16 6 L10 11 L16 16"/>
+  </g>
+</svg>

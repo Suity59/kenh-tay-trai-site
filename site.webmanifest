@@ -1,0 +1,11 @@
+{
+  "name": "Kênh Tay Trái",
+  "short_name": "Kênh Tay Trái",
+  "icons": [
+    { "src": "assets/favicon/icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "assets/favicon/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ],
+  "theme_color": "#F3EDE9",
+  "background_color": "#F3EDE9",
+  "display": "standalone"
+}
