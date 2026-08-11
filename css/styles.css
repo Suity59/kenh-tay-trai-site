@@ -226,7 +226,6 @@ section[id]{scroll-margin-top:calc(var(--nav-h) + 12px);}
   font-variant-numeric:tabular-nums;
 }
 
-.hero__disclaimer{margin-top:20px;font-size:0.75rem;color:var(--fg-4);text-align:center;}
 
 /* Màn hẹp: xếp dọc, chữ căn giữa lại như cũ, ảnh xuống dưới */
 @media (max-width:880px){
@@ -1036,8 +1035,7 @@ body.no-scroll{overflow:hidden;}
 @media (prefers-reduced-motion:no-preference){
   .js .hero__copy > *,
   .js .hero__video,
-  .js .hero__tags,
-  .js .hero__disclaimer{
+  .js .hero__tags{
     opacity:0;animation:heroIn .45s var(--ease-out-soft) forwards;
   }
   .js .hero__copy > .eyebrow   {animation-delay:.05s;}
@@ -1046,7 +1044,6 @@ body.no-scroll{overflow:hidden;}
   .js .hero__copy > .hero__actions{animation-delay:.29s;}
   .js .hero__video             {animation-delay:.37s;}
   .js .hero__tags              {animation-delay:.45s;}
-  .js .hero__disclaimer        {animation-delay:.53s;}
 }
 @keyframes heroIn{
   from{opacity:0;transform:translateY(13px);}
@@ -1293,7 +1290,7 @@ body.no-scroll{overflow:hidden;}
   .js .reveal,.reveal.is-in,
   .js [data-reveal-group] > *,
   .js [data-reveal-items] .rv-target,
-  .js .hero__copy > *,.js .hero__video,.js .hero__tags,.js .hero__disclaimer,
+  .js .hero__copy > *,.js .hero__video,.js .hero__tags,
   .js .mockchat .mockchat__msg > .mockchat__avatar,
   .js .mockchat .mockchat__msg > .mockchat__bubble,
   .js .sprout .sprout__leaf{
