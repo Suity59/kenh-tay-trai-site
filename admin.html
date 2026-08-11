@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Đơn đăng ký — Kênh Tay Trái</title>
+<link rel="icon" href="assets/favicon/favicon.svg?v=2" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css?v=26">
+<style>
+  /* Trang quản trị — dùng chung token & font của styles.css, class riêng tiền tố adm- */
+  body{background:var(--bg-2);}
+  .adm{max-width:1180px;margin-inline:auto;padding:32px var(--pad-x) 80px;}
+
+  .adm__bar{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    flex-wrap:wrap;margin-bottom:28px;
+    padding-bottom:20px;border-bottom:1px solid var(--hairline);
+  }
+  .adm__brand{display:flex;align-items:baseline;gap:10px;}
+  .adm__brand b{font-family:var(--font-head);font-size:1.25rem;letter-spacing:-0.02em;}
+  .adm__brand span{font-size:12px;color:var(--fg-3);}
+  .adm__baractions{display:flex;align-items:center;gap:10px;}
+
+  /* ---- Đăng nhập ---- */
+  .adm__login{
+    max-width:400px;margin:12vh auto 0;background:var(--bg-1);
+    border:1px solid var(--hairline);border-radius:var(--r-anchor);padding:34px 30px;
+  }
+  .adm__login h1{font-size:1.5rem;margin-bottom:8px;}
+  .adm__login p{font-size:0.875rem;color:var(--fg-3);line-height:1.6;margin-bottom:24px;}
+  .adm__field{margin-bottom:16px;}
+  .adm__field label{
+    display:block;font-size:11px;font-weight:700;letter-spacing:0.07em;
+    text-transform:uppercase;color:var(--label);margin-bottom:6px;
+  }
+  .adm__field input{
+    width:100%;font-family:var(--font-body);font-size:1rem;color:var(--fg-1);
+    padding:11px 13px;background:var(--bg-2);
+    border:1.5px solid var(--hairline);border-radius:var(--r-input);
+  }
+  .adm__field input:focus{outline:none;border-color:var(--fg-1);background:var(--bg-1);}
+  .adm__err{
+    display:none;font-size:0.875rem;color:#B3261E;background:#B3261E14;
+    border-radius:8px;padding:10px 13px;margin-bottom:14px;line-height:1.5;
+  }
+  .adm__err.is-on{display:block;}
+
+  /* ---- Thẻ số liệu ---- */
+  .adm__stats{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:14px;margin-bottom:30px;
+  }
+  .adm__stat{
+    background:var(--bg-1);border:1px solid var(--hairline);
+    border-radius:var(--r-card);padding:18px 20px;
+  }
+  .adm__stat dt{
+    font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
+    color:var(--label);margin-bottom:8px;
+  }
+  .adm__stat dd{
+    font-family:var(--font-head);font-weight:700;font-size:2rem;line-height:1;
+    font-variant-numeric:tabular-nums;
+  }
+  .adm__stat small{
+    display:block;margin-top:7px;font-family:var(--font-body);font-weight:400;
+    font-size:0.8125rem;color:var(--fg-3);
+  }
+
+  /* ---- Biểu đồ phân bố ---- */
+  .adm__charts{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));
+    gap:14px;margin-bottom:34px;
+  }
+  .adm__chart{
+    background:var(--bg-1);border:1px solid var(--hairline);
+    border-radius:var(--r-card);padding:20px;
+  }
+  .adm__chart h3{font-size:0.9375rem;margin-bottom:16px;}
+  .adm__row{margin-bottom:11px;}
+  .adm__row:last-child{margin-bottom:0;}
+  .adm__rowtop{
+    display:flex;justify-content:space-between;gap:12px;
+    font-size:0.8125rem;color:var(--fg-2);margin-bottom:5px;line-height:1.35;
+  }
+  .adm__rowtop b{flex:none;font-family:var(--font-body);color:var(--fg-1);font-variant-numeric:tabular-nums;}
+  .adm__track{height:7px;border-radius:4px;background:var(--row);overflow:hidden;}
+  .adm__fill{height:100%;border-radius:4px;background:var(--mint);}
+
+  /* ---- Danh sách đơn ---- */
+  .adm__listhead{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:14px;flex-wrap:wrap;margin-bottom:16px;
+  }
+  .adm__listhead h2{font-size:1.25rem;}
+  .adm__search{
+    font-family:var(--font-body);font-size:0.9375rem;
+    padding:9px 14px;min-width:250px;
+    background:var(--bg-1);border:1.5px solid var(--hairline);border-radius:var(--r-pill);
+  }
+  .adm__search:focus{outline:none;border-color:var(--fg-1);}
+
+  .adm__card{
+    background:var(--bg-1);border:1px solid var(--hairline);
+    border-radius:var(--r-card);margin-bottom:12px;overflow:hidden;
+  }
+  .adm__cardhead{
+    width:100%;display:grid;grid-template-columns:1fr auto;gap:6px 18px;
+    align-items:center;text-align:left;padding:16px 20px;
+    transition:background-color .15s ease;
+  }
+  .adm__cardhead:hover{background:var(--hover);}
+  .adm__who b{font-family:var(--font-head);font-size:1.0625rem;}
+  .adm__meta{
+    display:flex;flex-wrap:wrap;gap:6px 14px;
+    margin-top:5px;font-size:0.8125rem;color:var(--fg-3);
+  }
+  .adm__when{font-size:0.8125rem;color:var(--fg-3);white-space:nowrap;}
+  .adm__chip{
+    display:inline-block;padding:3px 10px;border-radius:var(--r-pill);
+    font-size:11px;font-weight:700;background:var(--bg-3);color:var(--fg-2);
+  }
+  .adm__chip--ready{background:var(--mint-soft);color:var(--fg-1);}
+
+  .adm__body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s cubic-bezier(.16,1,.3,1);}
+  .adm__body.is-open{grid-template-rows:1fr;}
+  .adm__bodyinner{overflow:hidden;min-height:0;}
+  .adm__detail{padding:4px 20px 20px;border-top:1px solid var(--hairline);}
+  .adm__qa{margin-top:16px;}
+  .adm__qa dt{
+    font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;
+    color:var(--label);margin-bottom:5px;
+  }
+  .adm__qa dd{font-size:0.9375rem;line-height:1.65;color:var(--fg-2);white-space:pre-wrap;}
+  .adm__grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-top:16px;}
+  .adm__empty{
+    background:var(--bg-1);border:1px dashed var(--fg-4);border-radius:var(--r-card);
+    padding:44px 20px;text-align:center;color:var(--fg-3);font-size:0.9375rem;
+  }
+  .adm__contact a{
+    color:var(--fg-1);font-weight:600;
+    text-decoration:underline;text-decoration-color:var(--sky);
+    text-decoration-thickness:2px;text-underline-offset:3px;
+  }
+  @media (max-width:560px){
+    .adm__cardhead{grid-template-columns:1fr;}
+    .adm__when{justify-self:start;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= ĐĂNG NHẬP ================= -->
+<div class="adm__login" id="loginView">
+  <h1>Đơn đăng ký</h1>
+  <p>Đăng nhập bằng tài khoản Supabase của bạn (namanhsuit@gmail.com) để xem đơn.</p>
+  <form id="loginForm">
+    <div class="adm__err" id="loginErr"></div>
+    <div class="adm__field">
+      <label for="admEmail">Email</label>
+      <input type="email" id="admEmail" autocomplete="username" required>
+    </div>
+    <div class="adm__field">
+      <label for="admPass">Mật khẩu</label>
+      <input type="password" id="admPass" autocomplete="current-password" required>
+    </div>
+    <button type="submit" class="btn btn--mint" style="width:100%" id="loginBtn">Đăng nhập</button>
+  </form>
+</div>
+
+<!-- ================= BẢNG ĐIỀU KHIỂN ================= -->
+<div class="adm" id="dashView" hidden>
+
+  <div class="adm__bar">
+    <div class="adm__brand">
+      <b>Đơn đăng ký</b>
+      <span>Kênh Tay Trái</span>
+    </div>
+    <div class="adm__baractions">
+      <button class="btn btn--outline btn--sm" id="csvBtn">Tải CSV</button>
+      <button class="btn btn--outline btn--sm" id="logoutBtn">Đăng xuất</button>
+    </div>
+  </div>
+
+  <dl class="adm__stats" id="stats"></dl>
+  <div class="adm__charts" id="charts"></div>
+
+  <div class="adm__listhead">
+    <h2>Từng đơn</h2>
+    <input type="search" class="adm__search" id="search" placeholder="Tìm theo tên, email, SĐT, nội dung...">
+  </div>
+  <div id="list"></div>
+
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  var SUPABASE_URL = 'https://gedyrwfhqpjrfcptrnck.supabase.co';
+  // Publishable key — an toàn ở client. RLS chỉ cho phép ĐÚNG tài khoản Nam Anh đọc bảng này.
+  var SUPABASE_KEY = 'sb_publishable_ywvY3y_NilX7LnuOtwyToQ_lAnRT9Oe';
+  var STORE = 'ktt_admin_session';
+
+  var loginView = document.getElementById('loginView');
+  var dashView  = document.getElementById('dashView');
+  var loginForm = document.getElementById('loginForm');
+  var loginErr  = document.getElementById('loginErr');
+  var loginBtn  = document.getElementById('loginBtn');
+  var searchEl  = document.getElementById('search');
+
+  var rows = [];
+
+  /* ---------------- phiên đăng nhập ---------------- */
+  function saveSession(s) {
+    try { sessionStorage.setItem(STORE, JSON.stringify(s)); } catch (e) {}
+  }
+  function readSession() {
+    try { return JSON.parse(sessionStorage.getItem(STORE) || 'null'); } catch (e) { return null; }
+  }
+  function clearSession() {
+    try { sessionStorage.removeItem(STORE); } catch (e) {}
+  }
+
+  function authRequest(grant, body) {
+    return fetch(SUPABASE_URL + '/auth/v1/token?grant_type=' + grant, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: SUPABASE_KEY },
+      body: JSON.stringify(body)
+    }).then(function (res) {
+      return res.json().then(function (data) {
+        if (!res.ok) throw new Error(data.error_description || data.msg || data.message || 'Đăng nhập thất bại');
+        return data;
+      });
+    });
+  }
+
+  function fetchRows(token) {
+    return fetch(SUPABASE_URL + '/rest/v1/ktt_applications?select=*&order=created_at.desc', {
+      headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + token }
+    }).then(function (res) {
+      if (res.status === 401) { var e = new Error('hết hạn'); e.expired = true; throw e; }
+      if (!res.ok) throw new Error('Không tải được dữ liệu (HTTP ' + res.status + ')');
+      return res.json();
+    });
+  }
+
+  // Lấy dữ liệu, tự làm mới token một lần nếu hết hạn.
+  function loadWithSession(session) {
+    return fetchRows(session.access_token).catch(function (err) {
+      if (!err.expired || !session.refresh_token) throw err;
+      return authRequest('refresh_token', { refresh_token: session.refresh_token })
+        .then(function (fresh) { saveSession(fresh); return fetchRows(fresh.access_token); });
+    });
+  }
+
+  /* ---------------- vào/ra ---------------- */
+  function showDash(data) {
+    rows = data;
+    loginView.hidden = true;
+    dashView.hidden = false;
+    renderStats();
+    renderCharts();
+    renderList('');
+  }
+
+  function showLogin(msg) {
+    dashView.hidden = true;
+    loginView.hidden = false;
+    if (msg) { loginErr.textContent = msg; loginErr.classList.add('is-on'); }
+  }
+
+  loginForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    loginErr.classList.remove('is-on');
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Đang đăng nhập...';
+
+    authRequest('password', {
+      email: document.getElementById('admEmail').value.trim(),
+      password: document.getElementById('admPass').value
+    })
+      .then(function (session) {
+        saveSession(session);
+        document.getElementById('admPass').value = '';
+        return loadWithSession(session);
+      })
+      .then(showDash)
+      .catch(function (err) {
+        loginErr.textContent = err.message === 'hết hạn'
+          ? 'Phiên đã hết hạn, đăng nhập lại giúp mình.'
+          : err.message;
+        loginErr.classList.add('is-on');
+      })
+      .then(function () {
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Đăng nhập';
+      });
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', function () {
+    clearSession();
+    rows = [];
+    location.reload();
+  });
+
+  /* ---------------- số liệu tổng ---------------- */
+  function daysAgo(n) { return Date.now() - n * 86400000; }
+
+  function renderStats() {
+    var total = rows.length;
+    var d7  = rows.filter(function (r) { return +new Date(r.created_at) >= daysAgo(7); }).length;
+    var d30 = rows.filter(function (r) { return +new Date(r.created_at) >= daysAgo(30); }).length;
+    var ready = rows.filter(function (r) { return (r.commit || '').indexOf('sẵn sàng') > -1; }).length;
+    var soon = rows.filter(function (r) {
+      var u = r.urgency || '';
+      return u.indexOf('Càng sớm') > -1 || u.indexOf('1 tháng') > -1;
+    }).length;
+
+    var pct = function (n) { return total ? Math.round(n / total * 100) + '%' : '—'; };
+
+    document.getElementById('stats').innerHTML = [
+      stat('Tổng đơn', total, d7 + ' đơn trong 7 ngày qua'),
+      stat('30 ngày qua', d30, total ? pct(d30) + ' tổng số đơn' : ''),
+      stat('Sẵn sàng nghiêm túc', ready, pct(ready) + ' số đơn'),
+      stat('Muốn bắt đầu sớm', soon, 'trong vòng 1 tháng')
+    ].join('');
+  }
+
+  function stat(label, value, sub) {
+    return '<div class="adm__stat"><dt>' + esc(label) + '</dt>' +
+           '<dd>' + value + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</dd></div>';
+  }
+
+  /* ---------------- phân bố ---------------- */
+  var CHARTS = [
+    { key: 'situation', title: 'Tình trạng hiện tại' },
+    { key: 'income',    title: 'Thu nhập mỗi tháng' },
+    { key: 'urgency',   title: 'Muốn bắt đầu khi nào' },
+    { key: 'source',    title: 'Biết đến qua đâu' },
+    { key: 'location',  title: 'Tỉnh/thành' },
+    { key: 'following', title: 'Theo dõi bao lâu' }
+  ];
+
+  function renderCharts() {
+    document.getElementById('charts').innerHTML = CHARTS.map(function (c) {
+      var counts = {};
+      rows.forEach(function (r) {
+        var v = (r[c.key] || '').trim();
+        if (v) counts[v] = (counts[v] || 0) + 1;
+      });
+      var pairs = Object.keys(counts).map(function (k) { return [k, counts[k]]; })
+                        .sort(function (a, b) { return b[1] - a[1]; });
+      if (!pairs.length) return '';
+
+      var max = pairs[0][1];
+      var bars = pairs.map(function (p) {
+        return '<div class="adm__row">' +
+                 '<div class="adm__rowtop"><span>' + esc(p[0]) + '</span><b>' + p[1] + '</b></div>' +
+                 '<div class="adm__track"><div class="adm__fill" style="width:' +
+                   Math.round(p[1] / max * 100) + '%"></div></div>' +
+               '</div>';
+      }).join('');
+
+      return '<div class="adm__chart"><h3>' + esc(c.title) + '</h3>' + bars + '</div>';
+    }).join('');
+  }
+
+  /* ---------------- danh sách đơn ---------------- */
+  function renderList(q) {
+    q = (q || '').toLowerCase().trim();
+    var shown = !q ? rows : rows.filter(function (r) {
+      return Object.keys(r).some(function (k) {
+        return k !== 'id' && String(r[k] || '').toLowerCase().indexOf(q) > -1;
+      });
+    });
+
+    var el = document.getElementById('list');
+    if (!shown.length) {
+      el.innerHTML = '<div class="adm__empty">' +
+        (rows.length ? 'Không có đơn nào khớp từ khoá.' : 'Chưa có đơn đăng ký nào.') + '</div>';
+      return;
+    }
+
+    el.innerHTML = shown.map(function (r, i) {
+      var name = ((r.first_name || '') + ' ' + (r.last_name || '')).trim() || '(không có tên)';
+      var ready = (r.commit || '').indexOf('sẵn sàng') > -1;
+
+      return '<article class="adm__card">' +
+        '<button class="adm__cardhead" data-i="' + i + '">' +
+          '<div class="adm__who"><b>' + esc(name) + '</b>' +
+            '<div class="adm__meta">' +
+              (ready ? '<span class="adm__chip adm__chip--ready">Sẵn sàng</span>'
+                     : '<span class="adm__chip">Chưa sẵn sàng</span>') +
+              (r.location ? '<span>' + esc(r.location) + '</span>' : '') +
+              (r.income   ? '<span>' + esc(r.income) + '</span>' : '') +
+              (r.urgency  ? '<span>' + esc(r.urgency) + '</span>' : '') +
+            '</div>' +
+          '</div>' +
+          '<span class="adm__when">' + fmtDate(r.created_at) + '</span>' +
+        '</button>' +
+        '<div class="adm__body"><div class="adm__bodyinner"><div class="adm__detail">' +
+          '<div class="adm__grid2">' +
+            kv('Email', r.email ? '<a href="mailto:' + esc(r.email) + '">' + esc(r.email) + '</a>' : '—', true) +
+            kv('Điện thoại', r.phone ? '<a href="tel:' + esc(r.phone) + '">' + esc(r.phone) + '</a>' : '—', true) +
+            kv('Tình trạng', r.situation || '—') +
+            kv('Theo dõi', r.following || '—') +
+            kv('Biết đến qua', r.source || '—') +
+          '</div>' +
+          qa('Chuyên môn & công việc hiện tại', r.expertise) +
+          qa('Vì sao muốn xây Kênh Tay Trái lúc này', r.why_now) +
+        '</div></div></div>' +
+      '</article>';
+    }).join('');
+
+    [].forEach.call(el.querySelectorAll('.adm__cardhead'), function (btn) {
+      btn.addEventListener('click', function () {
+        btn.nextElementSibling.classList.toggle('is-open');
+      });
+    });
+  }
+
+  // dt/dd bắt buộc nằm trong dl, không thì HTML không hợp lệ
+  function kv(label, value, raw) {
+    return '<dl class="adm__qa' + (raw ? ' adm__contact' : '') + '"><dt>' + esc(label) + '</dt>' +
+           '<dd>' + (raw ? value : esc(value)) + '</dd></dl>';
+  }
+  function qa(label, value) {
+    if (!value || !String(value).trim()) return '';
+    return '<dl class="adm__qa"><dt>' + esc(label) + '</dt><dd>' + esc(value) + '</dd></dl>';
+  }
+
+  searchEl.addEventListener('input', function () { renderList(searchEl.value); });
+
+  /* ---------------- xuất CSV ---------------- */
+  document.getElementById('csvBtn').addEventListener('click', function () {
+    if (!rows.length) return;
+    var cols = Object.keys(rows[0]);
+    var csv = [cols.join(',')].concat(rows.map(function (r) {
+      return cols.map(function (c) { return '"' + String(r[c] == null ? '' : r[c]).replace(/"/g, '""') + '"'; }).join(',');
+    })).join('\n');
+
+    var url = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'don-dang-ky-kenh-tay-trai.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  /* ---------------- tiện ích ---------------- */
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function fmtDate(iso) {
+    var d = new Date(iso);
+    if (isNaN(d)) return '';
+    var p = function (n) { return n < 10 ? '0' + n : n; };
+    return p(d.getDate()) + '/' + p(d.getMonth() + 1) + '/' + d.getFullYear() +
+           ' · ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  }
+
+  /* ---------------- tự vào lại nếu phiên còn ---------------- */
+  var existing = readSession();
+  if (existing && existing.access_token) {
+    loadWithSession(existing).then(showDash).catch(function () { clearSession(); showLogin(); });
+  }
+})();
+</script>
+</body>
+</html>
