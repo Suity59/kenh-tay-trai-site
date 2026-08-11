@@ -947,12 +947,15 @@ body.no-scroll{overflow:hidden;}
 /* ==========================================================================
    SECTION 9 — CHỐT CUỐI (dark section duy nhất được phép: nền mực #1B1624)
    ========================================================================== */
-.final__inner{max-width:680px;margin-inline:auto;text-align:center;}
+.final__inner{max-width:860px;margin-inline:auto;text-align:center;}
 .final__title{
   font-size:var(--step-h2);line-height:1.2;color:#fff;
-  margin-bottom:20px;
+  margin-bottom:28px;text-wrap:balance;
 }
 .final__em{font-style:italic;}
+/* Cụm gạch chân ở đây dài (25 ký tự); để nowrap thì nó bị đẩy nguyên cụm
+   xuống dòng riêng, làm dòng trên trơ lại một hai chữ. */
+.final__title .mark{white-space:normal;}
 .final__sub{
   font-size:clamp(1rem,0.96rem + 0.22vw,1.125rem);
   line-height:1.7;color:#B8B4BF;
