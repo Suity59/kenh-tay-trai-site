@@ -1404,19 +1404,11 @@ body.no-scroll{overflow:hidden;}
 }
 .jtour__pill:hover{color:var(--fg-1);}
 .jtour__pill.is-done{color:var(--fg-2);}
-.jtour__pill.is-active{background:var(--fg-1);color:#fff;border-color:var(--fg-1);padding:3px 18px 3px 3px;}
+.jtour__pill.is-active{background:var(--fg-1);color:#fff;border-color:var(--fg-1);}
+.jtour__pill.is-active i{border-color:#fff;}
 /* chặng đã qua: số tô đặc */
 .jtour__pill.is-done i{background:var(--fg-2);border-color:var(--fg-2);color:#fff;}
-/* icon Notioly chỉ hiện ở chặng đang xem, thế chỗ vòng số */
-.jtour__ico{
-  display:none;width:36px;height:36px;border-radius:50%;background:var(--bg-1);
-  align-items:center;justify-content:center;flex:none;
-}
-.jtour__ico img{width:28px;height:28px;display:block;}
-.jtour__pill.is-active i{display:none;}
-.jtour__pill.is-active .jtour__ico{display:inline-flex;animation:jtourIco .35s cubic-bezier(.2,.8,.2,1);}
-@keyframes jtourIco{from{transform:scale(.6) rotate(-12deg);opacity:0;}to{transform:none;opacity:1;}}
-@media (prefers-reduced-motion:reduce){.jtour__pill.is-active .jtour__ico{animation:none;}}
+
 
 /* nới rộng hơn container để ảnh đủ to */
 .jtour__grid{
@@ -1428,7 +1420,6 @@ body.no-scroll{overflow:hidden;}
 .jtour__step{min-height:78vh;display:flex;align-items:center;}
 .jtour__body{opacity:.28;transition:opacity .35s ease;}
 .jtour__step.is-active .jtour__body{opacity:1;}
-.jtour__icon{display:block;width:84px;height:84px;margin:0 0 12px -6px;}
 .jtour__k{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--coral);margin-bottom:8px;}
 .jtour__t{font-size:var(--step-h4);line-height:1.25;margin-bottom:12px;}
 .jtour__p{font-size:0.9375rem;line-height:1.7;color:var(--fg-2);margin-bottom:18px;}
@@ -1514,6 +1505,10 @@ body.no-scroll{overflow:hidden;}
   left:-0.3cqw;top:-0.2cqw;width:6cqw;height:4.6cqw;transform:scaleX(-1);
 }
 .jpin--ul span{position:absolute;left:5.6cqw;top:3.6cqw;}
+/* chữ bên trái, mũi tên trỏ sang phải; --x/--y là đầu mũi tên */
+.jpin--r{transform:translate(-100%,-50%);flex-direction:row-reverse;}
+.jpin--r .jpin__arw{--m:url(../assets/img/arrows/arc-left.svg);width:6.2cqw;height:3cqw;transform:scaleX(-1);}
+.jpin--r span{text-align:right;}
 /* bản ngắn cho khoảng hẹp (từ thanh công cụ xuống tiêu đề cột) */
 .jpin--dl.jpin--sm .jpin__arw{left:-0.7cqw;top:-4.1cqw;width:3.4cqw;height:4.35cqw;}
 .jpin--dl.jpin--sm span{left:3.25cqw;top:-5.6cqw;}
@@ -1924,4 +1919,41 @@ body.no-scroll{overflow:hidden;}
   .js .ashot__arw{clip-path:none !important;}
   /* nét khoanh coral: JS bỏ qua ở chế độ này nên path giữ nguyên đã vẽ */
   .js .mockchat__dots,.pop-seed{display:none !important;}
+}
+
+/* ---- Bản điện thoại: ảnh cắt cận + chú thích ngoài ảnh, mũi tên trỏ vào đúng chỗ ---- */
+.jmob{display:none;}
+@media (max-width:900px){
+  .atour .ashot--hero{display:none;}
+  .jmob{display:block;margin:16px 0 4px;}
+  .jmob__labs{
+    display:flex;gap:12px;font-size:0.8125rem;font-weight:600;line-height:1.35;color:var(--fg-1);
+  }
+  .jmob__labs--top{margin-bottom:22px;align-items:flex-end;}
+  .jmob__labs--bot{margin-top:22px;}
+  .jmob__labs span{max-width:64%;}
+  .jmob__labs:not(.jmob__labs--two) span{margin-left:clamp(0px,calc(var(--x) * 1% - 14px),36%);}
+  .jmob__labs--two{justify-content:space-between;}
+  .jmob__labs--two span{max-width:47%;}
+  .jmob__labs--two span + span{text-align:right;}
+  .jmob__img{position:relative;display:block;}
+  .jmob__img img{
+    display:block;width:100%;height:auto;border-radius:10px;
+    border:1px solid rgba(27,22,36,0.14);background:#fff;
+  }
+  /* mũi tên ngoài ảnh: giữ đúng tỉ lệ nét vẽ, dài theo khoảng cách tới điểm trỏ */
+  .jmob__arw{
+    position:absolute;left:calc(var(--x) * 1%);aspect-ratio:608/792;background:var(--fg-1);pointer-events:none;
+    -webkit-mask:url(../assets/img/arrows/hook-down.svg) no-repeat center/contain;
+    mask:url(../assets/img/arrows/hook-down.svg) no-repeat center/contain;
+  }
+  .jmob__arw--down{top:-20px;height:calc(var(--y) * 1% + 20px);max-height:64px;transform:translateX(-22%) scaleX(-1);}
+  .jmob__arw--up{bottom:-20px;height:calc((100 - var(--y)) * 1% + 20px);max-height:64px;transform:translateX(-22%) rotate(180deg);}
+  /* chú thích trong ảnh: luôn hiện (không phụ thuộc trạng thái chặng như bản laptop) */
+  .jmob .jpin{opacity:1;font-size:11.5px;}
+  .jmob__img{border-radius:10px;}
+  /* ảnh đứng ngay sau đoạn mô tả, hai ô AI làm / Bạn làm xuống dưới */
+  .jtour__body{display:flex;flex-direction:column;}
+  .jtour__who{order:2;}
+  .jtour__body .jmob{order:1;margin-bottom:18px;}
 }
