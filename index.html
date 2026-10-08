@@ -12,7 +12,7 @@
 <link rel="manifest" href="site.webmanifest">
 <link rel="preload" href="fonts/SVN-Recoleta%20Bold.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="fonts/SVN-Gilroy%20Regular.otf" as="font" type="font/otf" crossorigin>
-<link rel="stylesheet" href="css/styles.css?v=26">
+<link rel="stylesheet" href="css/styles.css?v=44">
 </head>
 <body>
 
@@ -25,6 +25,7 @@
     <nav class="nav__links" aria-label="Điều hướng chính">
       <a href="#ve-nam-anh">Về Nam Anh</a>
       <a href="#chuong-trinh">Lộ trình</a>
+      <a href="#he-thong-ai">Hệ thống AI</a>
       <a href="#quy-trinh">Câu hỏi</a>
       <a class="btn btn--mint btn--sm" href="#dang-ky">Đăng ký cohort</a>
     </nav>
@@ -603,6 +604,434 @@
     </div>
   </section>
 
+  <!-- ============================ 6b. HẬU KỲ CÙNG AI (demo Claude) ============================ -->
+  <section class="section aistudio bg-ink" id="he-thong-ai">
+    <div class="container">
+
+      <div class="aistudio__head reveal">
+        <p class="eyebrow eyebrow--center eyebrow--dark">Tự động hóa cùng AI</p>
+        <h2 class="aistudio__title">
+          <span class="num" data-count="80%">80%</span> việc sản xuất nội dung của&nbsp;mình
+          <span class="mark mark--underline">giờ giao được cho AI.</span>
+        </h2>
+        <p class="aistudio__intro">
+          Gom dẫn chứng, cắt A-roll (đoạn mình nói trước camera), dựng đồ hoạ, chèn sub và nhạc,
+          làm thumbnail cho tới trả lời nhãn hàng và theo dõi doanh thu: những việc trước đây
+          mình phải ngồi làm tay thì giờ mình có thể giao cho AI bằng một câu lệnh và bộ skill tiếng Việt.
+        </p>
+      </div>
+
+      <!-- Thanh chia việc: AI 80% · bạn 20% -->
+      <div class="aisplit reveal" aria-label="Chia việc khi sản xuất nội dung: AI làm 80%, bạn làm 20%">
+        <div class="aisplit__bar">
+          <div class="aisplit__ai"><b>AI</b><span class="num">80%</span></div>
+          <div class="aisplit__you"><b>Bạn</b><span class="num">20%</span></div>
+        </div>
+        <div class="aisplit__legend">
+          <p><i class="aisplit__dot aisplit__dot--ai"></i>Nghiên cứu · Nháp kịch bản · Cắt A-roll · Dựng đồ hoạ · Sub &amp; nhạc · Thumbnail · Trả lời nhãn hàng · Giao việc trên Notion</p>
+          <p><i class="aisplit__dot aisplit__dot--you"></i>Chọn ý tưởng · Lên hình · Duyệt bản cuối</p>
+        </div>
+      </div>
+
+      <!-- Demo: câu lệnh + câu trả lời trích nguyên văn từ phiên thật, kết quả là hiện vật thật -->
+      <div class="aidemo reveal" data-aidemo>
+        <div class="aidemo__top">
+          <p class="aidemo__label">
+            <b>Xem Claude làm việc.</b>
+            Câu lệnh và câu trả lời trích nguyên văn từ các phiên làm việc thật của mình.
+          </p>
+          <div class="aidemo__tabs" role="tablist" aria-label="Chọn việc để xem demo">
+            <button class="aidemo__tab is-active" role="tab" aria-selected="true" data-demo="skill"><i class="num">01</i>Bộ skill AI</button>
+            <button class="aidemo__tab" role="tab" aria-selected="false" data-demo="motion"><i class="num">02</i>Dựng hình & sub</button>
+            <button class="aidemo__tab" role="tab" aria-selected="false" data-demo="thumb"><i class="num">03</i>Làm thumbnail</button>
+            <button class="aidemo__tab" role="tab" aria-selected="false" data-demo="notion"><i class="num">04</i>Giao việc trên Notion</button>
+          </div>
+        </div>
+
+        <div class="aidemo__stage">
+
+          <div class="term">
+            <div class="term__bar">
+              <span></span><span></span><span></span>
+              <b><em class="term__tool">Claude Code</em> <em class="term__where">~/namanhsuit</em></b>
+            </div>
+            <div class="term__body">
+              <div class="term__pane is-active" data-pane="motion" data-tool="Claude Code" data-where="giauhon-edit">
+                <p class="term__meta"><span class="term__live"></span>Phiên ngày 04–05/10/2026 · 2 vòng góp ý · trích nguyên văn</p>
+                <p class="term__prompt"><span class="term__caret" aria-hidden="true">›</span><span class="term__typed">…/vi-sao-ai-cung-giau-hon-minh-3-that-4-ao.md /video-edit-ali …/vì sao ai cũng giàu hơn mình.m4v — edit cho mình video, ngoài ra video cũng có liên quan nhiều đến tài chính tiết kiệm đầu tư, thì hãy có thêm biểu đồ, chart minh họa nhé. Dùng Fable là Orchestrator và OPUS 5.5 High là Agent.</span></p>
+                <ol class="term__steps">
+                  <li>Tách lời file raw <b class="num">29:07</b>, chốt take cho từng câu nói lại</li>
+                  <li>Viết plan lớp hình: <b class="num">66</b> event, <b class="num">17</b> biểu đồ</li>
+                  <li>Chạy <b class="num">3</b> agent song song: cắt A-roll, gom tư liệu, dựng biểu đồ</li>
+                  <li>Sửa theo góp ý vòng 2, thêm đoạn demo nhãn hàng</li>
+                  <li>Gửi preview và file Final Cut</li>
+                </ol>
+                <p class="term__done">“Preview v4 đã xong… video <b>19:20</b>, gồm toàn bộ góp ý vòng 2.”</p>
+              </div>
+              <div class="term__pane" data-pane="thumb" data-tool="Codex" data-where="thumbnails">
+                <p class="term__meta"><span class="term__live"></span>Phiên ngày 06/10/2026 · 5 phút 36 giây · trích nguyên văn</p>
+                <p class="term__prompt"><span class="term__caret" aria-hidden="true">›</span><span class="term__typed">làm cho mình 1 thumbnail style như này… mặt mình đây: …/v3_t253.670_serious_pencil-explain.png · background có thể là tờ 500,000 đồng hoặc là dollar cũng được · xung quanh mình thì cũng có 4 người k có màu, đường kẻ mắt họ có 2 text: Bác sĩ 500 triệu/tháng, Kỹ sư 90 triệu/tháng, Phi công 200 triệu/tháng, KOL 150 triệu/tháng</span></p>
+                <ol class="term__steps">
+                  <li>Đọc ảnh mẫu và ảnh mặt bạn chọn</li>
+                  <li>Dựng <b class="num">3</b> bố cục: dải vàng, hai dòng, nền dollar</li>
+                  <li>Giữ đúng <b class="num">4</b> mức lương bạn đưa</li>
+                  <li>Lưu ảnh và prompt vào thư mục thumbnail</li>
+                </ol>
+                <p class="term__done">“Hai dòng trên dải vàng + mặt chống cằm: mình khuyên chọn bản này, biểu cảm nghi ngờ hợp nội dung và chữ dễ đọc.”</p>
+              </div>
+              <div class="term__pane" data-pane="notion" data-tool="Claude Code" data-where="namanhsuit">
+                <p class="term__meta"><span class="term__live"></span>Phiên ngày 28/09/2026 · 4 phút · trích nguyên văn</p>
+                <p class="term__prompt"><span class="term__caret" aria-hidden="true">›</span><span class="term__typed">push 1 bản lên Notion trước cho mình, đăng vào thứ 7 tuần này</span></p>
+                <ol class="term__steps">
+                  <li>Dựng bảng shot list <b class="num">42</b> nhịp, lưu vào file Obsidian</li>
+                  <li>Kiểm cấu trúc database Contents</li>
+                  <li>Tạo trang Notion, đặt ngày đăng thứ 7 03/10/2026</li>
+                  <li>Ghi rõ các nhịp còn chờ bạn chốt trước khi quay</li>
+                </ol>
+                <p class="term__done">“Mình đã push kịch bản lên Notion: 3 lý do THẬT và 4 lý do ẢO khiến bạn thấy mình TỤT LẠI.”</p>
+              </div>
+            </div>
+            <div class="term__foot">
+              <button type="button" class="term__replay" data-demo-replay>
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 8a5 5 0 1 0 1.6-3.7M3 2.5v2.8h2.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Chạy lại
+              </button>
+              <button type="button" class="term__next" data-demo-next>Xem tiếp <span aria-hidden="true">→</span></button>
+            </div>
+          </div>
+
+          <div class="aiout">
+            <div class="aiout__pane is-active" data-out="skill">
+              <p class="aiout__label">Bộ skill mình đang dùng <span>~/skills-shared · 14 skill</span></p>
+              <div class="skillcat">
+                <figure class="aishot skillcat__shot">
+                  <img src="assets/img/notion/skills.webp" alt="Ảnh chụp thư mục bộ skill AI thật trong Finder" width="920" height="464" loading="lazy" decoding="async">
+                  <figcaption>Thư mục skill thật trên máy của mình.</figcaption>
+                </figure>
+                <div class="skillcat__groups">
+                  <section class="skillcat__group">
+                    <h4>Video &amp; hậu kỳ</h4>
+                    <ul class="aiskills">
+                      <li><code>edit-aroll-speech-cut</code><span>Cắt A-roll: bỏ câu nói lại, khoảng lặng, xuất file Final Cut</span></li>
+                      <li><code>video-edit-ali</code><span>Dựng biểu đồ, sub, nhạc nền rồi tự kiểm lỗi</span></li>
+                      <li><code>gemini-watch</code><span>Xem video mẫu, bóc nhịp cắt và hook</span></li>
+                      <li><code>remotion-best-practices</code><span>Luật làm đồ hoạ chuyển động bằng code</span></li>
+                      <li><code>youtube-vertical-wrapper</code><span>Đổi video ngang thành bản dọc 9:16</span></li>
+                      <li><code>footage-organizer</code><span>Xếp footage thô vào đúng thư mục</span></li>
+                    </ul>
+                  </section>
+                  <section class="skillcat__group">
+                    <h4>Kịch bản &amp; nội dung</h4>
+                    <ul class="aiskills">
+                      <li><code>brand-voice-namanhsuit</code><span>Viết kịch bản, caption đúng giọng kênh</span></li>
+                      <li><code>brand-voice-dautu</code><span>Viết phân tích đầu tư, thị trường</span></li>
+                      <li><code>push-script-to-notion</code><span>Đẩy kịch bản lên Notion kèm shot list</span></li>
+                      <li><code>humanizer</code><span>Soi và gỡ dấu văn AI</span></li>
+                      <li><code>translate</code><span>Dịch sát nghĩa video, bài viết nước ngoài</span></li>
+                    </ul>
+                  </section>
+                  <section class="skillcat__group">
+                    <h4>Nhãn hàng</h4>
+                    <ul class="aiskills">
+                      <li><code>brand-assistant</code><span>Đọc mail hợp tác, tìm hiểu brand, gợi ý nhận hay từ chối</span></li>
+                      <li><code>tra-loi-brand</code><span>Trả lời nhãn hàng, báo giá theo bảng giá</span></li>
+                      <li><code>luat-su</code><span>Rà hợp đồng booking trước khi ký</span></li>
+                    </ul>
+                  </section>
+                </div>
+              </div>
+              <div class="skillcat__foot">
+                <button type="button" class="term__next" data-demo-next>Xem tiếp <span aria-hidden="true">→</span></button>
+              </div>
+            </div>
+
+            <div class="aiout__pane" data-out="motion">
+              <p class="aiout__label">Kết quả <span>Final Cut · bản dựng v7</span></p>
+              <div class="aiout__wait" aria-hidden="true"><i></i><i></i><i></i> Claude đang làm</div>
+              <div class="aiout__result">
+                <figure class="aishot">
+                  <a href="assets/img/ai/fcp-giauhon-full.webp" target="_blank" rel="noopener" class="aishot__zoom" aria-label="Mở ảnh Final Cut cỡ lớn"><img src="assets/img/ai/fcp-giauhon-timeline.webp" alt="Ảnh chụp timeline Final Cut thật của video Giàu hơn bạn với các lớp đồ hoạ E61 đến E80, sub, A-roll và nhạc nền do AI dựng" width="1330" height="610" loading="lazy" decoding="async"><span>Xem ảnh lớn ↗</span></a>
+                  <figcaption>Ảnh chụp timeline thật trong Final Cut: mỗi khối E61, E62… là một lớp đồ hoạ AI dựng, bên dưới là sub, A-roll và nhạc nền.</figcaption>
+                </figure>
+                <dl class="aistats aistats--3">
+                  <div><dt class="num">17</dt><dd>biểu đồ có nguồn</dd></div>
+                  <div><dt class="num">850</dt><dd>dòng sub</dd></div>
+                  <div><dt class="num">0</dt><dd>lỗi khi tự kiểm</dd></div>
+                </dl>
+              </div>
+            </div>
+
+            <div class="aiout__pane" data-out="thumb">
+              <p class="aiout__label">Kết quả <span>3 phương án · 1 lệnh</span></p>
+              <div class="aiout__wait" aria-hidden="true"><i></i><i></i><i></i> Codex đang làm</div>
+              <div class="aiout__result">
+                <figure class="aithumb">
+                  <div class="aithumb__main">
+                    <img src="assets/img/ai/ai-thumb-thu-nhap.jpg" alt="Thumbnail AI làm: Nam Anh ở giữa, bốn người đen trắng xung quanh với nhãn lương che mắt" width="960" height="540" loading="lazy" decoding="async">
+                    <span class="aithumb__pick">Bản 2 · đề xuất</span>
+                  </div>
+                  <div class="aithumb__alts">
+                    <img src="assets/img/ai/ai-thumb-v1.jpg" alt="Phương án 1: nền tiền 500 nghìn, nhãn vàng" width="480" height="270" loading="lazy" decoding="async">
+                    <img src="assets/img/ai/ai-thumb-v3.jpg" alt="Phương án 3: nền tiền đô, nhãn coral" width="480" height="270" loading="lazy" decoding="async">
+                  </div>
+                </figure>
+              </div>
+            </div>
+
+            <div class="aiout__pane" data-out="notion">
+              <p class="aiout__label">Kết quả <span>Notion · Contents</span></p>
+              <div class="aiout__wait" aria-hidden="true"><i></i><i></i><i></i> Claude đang làm</div>
+              <div class="aiout__result">
+                <figure class="aishot aishot--light">
+                  <a href="assets/img/notion/script-shotlist.webp" target="_blank" rel="noopener" class="aishot__zoom" aria-label="Mở ảnh Notion cỡ lớn"><img src="assets/img/notion/tour-script.webp" alt="Ảnh chụp trang Notion thật Claude tạo: phần tiêu đề, thumbnail A/B và bảng shot list" width="960" height="720" loading="lazy" decoding="async"><span>Xem ảnh lớn ↗</span></a>
+                  <figcaption>Ảnh chụp trang Notion thật mà Claude tạo trong phiên này: 3 tiêu đề A/B và bảng shot list 42 nhịp.</figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bằng chứng: quay màn hình thật phiên Claude dựng video Digital Architect -->
+      <div class="aiproof reveal">
+        <div class="aiproof__copy">
+          <p class="aiproof__tag"><i aria-hidden="true"></i>Phiên làm việc thật với Claude</p>
+          <h3 class="aiproof__title">Một phiên làm việc của mình và AI.</h3>
+          <p class="aiproof__sub">
+            Claude báo xong việc và gửi bản xem trước ngay trong khung chat, mình
+            bấm play là video bật ra khung lớn: đoạn biểu đồ “Cuộc đua 5 năm” trong
+            video Giàu hơn bạn, dựng bằng đúng quy trình này.
+          </p>
+        </div>
+        <div class="aivideo aiproof__player" data-aivideo data-autoplay data-src-mobile="assets/video/ai-proof-claude-mobile.mp4" data-poster-mobile="assets/img/ai/ai-proof-poster-mobile.jpg">
+          <video class="aivideo__el" src="assets/video/ai-proof-claude.mp4" poster="assets/img/ai/ai-proof-poster.jpg" muted playsinline preload="none" width="1920" height="1080" aria-label="Phiên làm việc với Claude: bản xem trước trong khung chat bật ra khung lớn, đoạn biểu đồ Cuộc đua 5 năm"></video>
+          <button type="button" class="aivideo__play" aria-label="Phát video quay màn hình">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================ 6c. BỘ HỆ THỐNG (template Notion + skill AI) ============================ -->
+  <section class="section aikit bg-cream" id="bo-he-thong">
+    <div class="container">
+
+      <div class="aikit__head reveal">
+        <div class="aikit__head-copy">
+          <p class="eyebrow">Đi kèm chương trình</p>
+          <h2 class="aikit__title">
+            Toàn bộ hệ thống sáng&nbsp;tạo nội&nbsp;dung của&nbsp;mình,
+            <span class="mark mark--underline mark--wrap">giao tận tay bạn.</span>
+          </h2>
+          <p class="aikit__intro">
+            Một trang Notion quản lý nội dung đa nền tảng, từ kho ý tưởng, kịch bản, lịch đăng
+            cho tới booking và doanh thu nhãn hàng, đi kèm bộ skill để AI hỗ trợ ở từng giai đoạn.
+            Học viên Kênh Tay Trái được truy cập toàn bộ và dùng ngay cho kênh của mình mà không
+            phải dựng lại từ đầu.
+          </p>
+        </div>
+        <img class="aikit__illus" src="assets/img/ai/notioly-ai-edit.svg" alt="" width="1150" height="1050" loading="lazy" decoding="async">
+      </div>
+
+      <!-- Ảnh chụp thật Notion của Nam Anh + chú thích mũi tên -->
+      <div class="atour reveal">
+        <figure class="ashot ashot--hero" data-ashot>
+          <ul class="ashot__side ashot__side--l">
+          <li style="--at:10%" data-x="18" data-y="12.3"><b class="ashot__n">1</b><span>Mỗi định dạng một góc nhìn riêng: Long, Short, nhãn hàng, ý tưởng</span></li>
+          <li style="--at:62%" data-x="32.7" data-y="64"><b class="ashot__n">2</b><span>Trạng thái từng giai đoạn nằm ngay trên thẻ, mở lịch là biết việc nào còn dang dở</span></li>
+          </ul>
+          <div class="ashot__frame">
+            <div class="ashot__bar"><i></i><i></i><i></i><span>Notion · Contents · All (on going)</span></div>
+            <div class="ashot__shot">
+              <img src="assets/img/notion/cal-pipeline.webp" alt="Ảnh chụp lịch nội dung tháng 10/2026 trong Notion của Nam Anh, mỗi thẻ video có checklist TTH, Write, Film, Done" width="1668" height="1218" loading="lazy" decoding="async">
+            </div>
+          </div>
+          <ul class="ashot__side ashot__side--r">
+          <li style="--at:25%" data-x="83" data-y="26.8"><b class="ashot__n">3</b><span>Mỗi video gắn một nhiệm vụ trong phễu: Attract, Nurture, Position, Convert</span></li>
+          <li style="--at:75%" data-x="72.5" data-y="77"><b class="ashot__n">4</b><span>Video nhãn hàng nằm chung lịch, giá đi kèm từng thẻ (mình đã ẩn)</span></li>
+          </ul>
+        </figure>
+        <p class="atour__note">Ảnh chụp màn hình thật từ Notion của mình. Số tiền và tên nhãn hàng chưa công bố đã được ẩn.</p>
+      </div>
+
+      <!-- Hành trình một video (gộp phương án B + C): thanh 6 chặng + khung ảnh đứng yên đổi theo bước -->
+      <div class="jtour" data-jtour>
+        <h3 class="jtour__h reveal">Một video đi qua hệ thống này thế nào</h3>
+        <p class="jtour__sub reveal">Cuộn xuống để đi cùng một video từ lúc còn là ý tưởng tới lúc nhãn hàng chuyển khoản. Ở mỗi chặng, bạn thấy màn hình mình dùng, phần AI làm và phần vẫn là của bạn.</p>
+        <ol class="jtour__rail" aria-label="Các chặng của một video">
+          <li><button type="button" class="jtour__pill is-active" data-j="1"><i class="num">1</i><span class="jtour__ico" aria-hidden="true"><img src="assets/img/stages/y-tuong.svg" alt="" width="28" height="28" decoding="async"></span><span>Ý tưởng</span></button></li>
+          <li><button type="button" class="jtour__pill" data-j="2"><i class="num">2</i><span class="jtour__ico" aria-hidden="true"><img src="assets/img/stages/nghien-cuu.svg" alt="" width="28" height="28" decoding="async"></span><span>Nghiên cứu</span></button></li>
+          <li><button type="button" class="jtour__pill" data-j="3"><i class="num">3</i><span class="jtour__ico" aria-hidden="true"><img src="assets/img/stages/kich-ban.svg" alt="" width="28" height="28" decoding="async"></span><span>Kịch bản</span></button></li>
+          <li><button type="button" class="jtour__pill" data-j="4"><i class="num">4</i><span class="jtour__ico" aria-hidden="true"><img src="assets/img/stages/quay-dung.svg" alt="" width="28" height="28" decoding="async"></span><span>Quay & dựng</span></button></li>
+          <li><button type="button" class="jtour__pill" data-j="5"><i class="num">5</i><span class="jtour__ico" aria-hidden="true"><img src="assets/img/stages/thumbnail.svg" alt="" width="28" height="28" decoding="async"></span><span>Thumbnail</span></button></li>
+          <li><button type="button" class="jtour__pill" data-j="6"><i class="num">6</i><span class="jtour__ico" aria-hidden="true"><img src="assets/img/stages/nhan-hang.svg" alt="" width="28" height="28" decoding="async"></span><span>Nhãn hàng</span></button></li>
+        </ol>
+        <div class="jtour__grid">
+          <div class="jtour__steps">
+          <article class="jtour__step is-active" data-j="1">
+            <div class="jtour__body">
+              <img class="jtour__icon" src="assets/img/stages/y-tuong.svg" alt="" width="84" height="84" loading="lazy" decoding="async">
+              <p class="jtour__k"><span class="num">01</span> · Ý tưởng</p>
+              <h4 class="jtour__t">Không bao giờ cạn ý tưởng để quay</h4>
+              <p class="jtour__p">Video nổi bật trên thị trường sẽ được tự động lưu vào kho ý tưởng, AI bóc công thức hook rồi chuyển thể tiêu đề sang tiếng Việt. Lúc cần ý mới, bạn mở ra là có sẵn vài hướng đã được kiểm chứng.</p>
+              <div class="jtour__who">
+                <div class="jtour__ai"><b>AI làm</b><ul><li>Xem video mẫu, bóc nhịp cắt và hook</li><li>Chuyển thể tiêu đề sang tiếng Việt, đúng giọng kênh</li></ul><p class="jtour__chips"><code>gemini-watch</code><code>brand-voice</code></p></div>
+                <div class="jtour__you"><b>Bạn làm</b><ul><li>Chọn ý hợp với kênh và câu chuyện của mình</li></ul></div>
+              </div>
+              <figure class="jtour__m"><img src="assets/img/notion/tour-ideas.webp" alt="Kho ý tưởng trong Notion với tiêu đề gốc và tiêu đề chuyển thể tiếng Việt" width="1300" height="975" loading="lazy" decoding="async"></figure>
+            </div>
+          </article>
+          <article class="jtour__step" data-j="2">
+            <div class="jtour__body">
+              <img class="jtour__icon" src="assets/img/stages/nghien-cuu.svg" alt="" width="84" height="84" loading="lazy" decoding="async">
+              <p class="jtour__k"><span class="num">02</span> · Nghiên cứu</p>
+              <h4 class="jtour__t">Dẫn chứng có sẵn, nguồn nào cũng có link</h4>
+              <p class="jtour__p">Sách, bài báo, câu trích và cảnh quay hay được lưu một lần, chấm điểm và gắn chủ đề. Lúc viết, AI lấy dẫn chứng từ thư viện này và kiểm tra nguồn nào cũng có tên, năm và link.</p>
+              <div class="jtour__who">
+                <div class="jtour__ai"><b>AI làm</b><ul><li>Tìm dẫn chứng hợp với từng luận điểm</li><li>Kiểm tên tác giả, năm, link của từng nguồn</li></ul></div>
+                <div class="jtour__you"><b>Bạn làm</b><ul><li>Đọc, rồi lưu thứ hay vào thư viện</li></ul></div>
+              </div>
+              <figure class="jtour__m"><img src="assets/img/notion/tour-quote.webp" alt="Thư viện sách trong Notion có điểm, trạng thái và chủ đề" width="1300" height="975" loading="lazy" decoding="async"></figure>
+            </div>
+          </article>
+          <article class="jtour__step" data-j="3">
+            <div class="jtour__body">
+              <img class="jtour__icon" src="assets/img/stages/kich-ban.svg" alt="" width="84" height="84" loading="lazy" decoding="async">
+              <p class="jtour__k"><span class="num">03</span> · Kịch bản</p>
+              <h4 class="jtour__t">Viết đúng giọng, giao editor trong một lệnh</h4>
+              <p class="jtour__p">Template có sẵn khung tiêu đề, thumbnail, hook và shot list. AI viết nháp theo giọng của bạn, rồi đẩy kịch bản lên Notion kèm bảng shot list có mã từng nhịp để editor bắt tay vào dựng.</p>
+              <div class="jtour__who">
+                <div class="jtour__ai"><b>AI làm</b><ul><li>Viết nháp kịch bản theo giọng kênh</li><li>Đề xuất 3 tiêu đề, 3 thumbnail để A/B test</li><li>Đẩy lên Notion kèm shot list</li></ul><p class="jtour__chips"><code>brand-voice</code><code>push-script-to-notion</code></p></div>
+                <div class="jtour__you"><b>Bạn làm</b><ul><li>Kể câu chuyện thật của mình</li><li>Duyệt bản cuối</li></ul></div>
+              </div>
+              <figure class="jtour__m"><img src="assets/img/notion/tour-script.webp" alt="Trang kịch bản trong Notion với 3 tiêu đề A/B và bảng shot list" width="960" height="720" loading="lazy" decoding="async"></figure>
+            </div>
+          </article>
+          <article class="jtour__step" data-j="4">
+            <div class="jtour__body">
+              <img class="jtour__icon" src="assets/img/stages/quay-dung.svg" alt="" width="84" height="84" loading="lazy" decoding="async">
+              <p class="jtour__k"><span class="num">04</span> · Quay & dựng</p>
+              <h4 class="jtour__t">Bạn đứng trước camera, phần còn lại AI lo</h4>
+              <p class="jtour__p">Quay xong, bạn tick ô Film và giao việc cho AI: cắt câu nói lại và khoảng lặng, dựng biểu đồ, chèn sub và nhạc, tự kiểm lỗi rồi giao file Final Cut. Mỗi việc là một skill viết bằng tiếng Việt, nên AI làm đúng quy trình của bạn.</p>
+              <div class="jtour__who">
+                <div class="jtour__ai"><b>AI làm</b><ul><li>Cắt A-roll, bỏ retake và khoảng lặng</li><li>Dựng biểu đồ, thẻ số liệu, sub, nhạc nền</li><li>Tự kiểm lỗi, xuất file Final Cut 4K</li></ul><p class="jtour__chips"><code>edit-aroll-speech-cut</code><code>video-edit</code></p></div>
+                <div class="jtour__you"><b>Bạn làm</b><ul><li>Quay</li><li>Xem bản dựng, góp ý vài dòng</li></ul></div>
+              </div>
+              <figure class="jtour__m"><img src="assets/img/notion/tour-video.webp" alt="Trang một video trong Notion với các ô tick TTH, Write, Film, Done" width="1004" height="753" loading="lazy" decoding="async"></figure>
+            </div>
+          </article>
+          <article class="jtour__step" data-j="5">
+            <div class="jtour__body">
+              <img class="jtour__icon" src="assets/img/stages/thumbnail.svg" alt="" width="84" height="84" loading="lazy" decoding="async">
+              <p class="jtour__k"><span class="num">05</span> · Thumbnail</p>
+              <h4 class="jtour__t">Từ moodboard tới 3 phương án để chọn</h4>
+              <p class="jtour__p">Thumbnail đẹp gặp được lưu vào moodboard kèm link gốc. Tới lúc làm, bạn đưa mẫu cho AI, nó ghép ảnh mặt của bạn theo design system và trả về 3 phương án.</p>
+              <div class="jtour__who">
+                <div class="jtour__ai"><b>AI làm</b><ul><li>Ghép ảnh mặt, chữ, nền theo design system</li><li>Kiểm dấu tiếng Việt trên ảnh</li></ul><p class="jtour__chips"><code>thumbnail</code></p></div>
+                <div class="jtour__you"><b>Bạn làm</b><ul><li>Chọn mẫu tham khảo và phương án cuối</li></ul></div>
+              </div>
+              <figure class="jtour__m"><img src="assets/img/notion/tour-mood.webp" alt="Moodboard thumbnail tham khảo trong Notion" width="1200" height="900" loading="lazy" decoding="async"></figure>
+            </div>
+          </article>
+          <article class="jtour__step" data-j="6">
+            <div class="jtour__body">
+              <img class="jtour__icon" src="assets/img/stages/nhan-hang.svg" alt="" width="84" height="84" loading="lazy" decoding="async">
+              <p class="jtour__k"><span class="num">06</span> · Nhãn hàng</p>
+              <h4 class="jtour__t">Từ email báo giá tới lúc nhận tiền</h4>
+              <p class="jtour__p">Mỗi hợp đồng là một thẻ, kéo qua từng cột từ ý tưởng, dựng, nhận tiền tới đăng. AI soạn báo giá theo bảng giá của bạn và viết đoạn quảng cáo đúng giọng, còn Notion tự cộng doanh thu từng tháng.</p>
+              <div class="jtour__who">
+                <div class="jtour__ai"><b>AI làm</b><ul><li>Soạn báo giá, trả lời nhãn hàng</li><li>Viết đoạn quảng cáo đúng giọng kênh</li></ul><p class="jtour__chips"><code>tra-loi-brand</code></p></div>
+                <div class="jtour__you"><b>Bạn làm</b><ul><li>Chọn nhãn hàng hợp kênh</li><li>Duyệt hợp đồng</li></ul></div>
+              </div>
+              <figure class="jtour__m"><img src="assets/img/notion/tour-booking.webp" alt="Bảng booking nhãn hàng trong Notion, số tiền đã được ẩn" width="1360" height="1020" loading="lazy" decoding="async"></figure>
+            </div>
+          </article>
+          </div>
+          <div class="jtour__stage" aria-hidden="true">
+            <div class="jtour__shot is-on" data-j="1">
+              <div class="jtour__win">
+                <div class="ashot__bar"><i></i><i></i><i></i><span>Notion · Content Intelligence</span></div>
+                <img src="assets/img/notion/tour-ideas.webp" alt="Kho ý tưởng trong Notion với tiêu đề gốc và tiêu đề chuyển thể tiếng Việt" width="1300" height="975" loading="lazy" decoding="async">
+              </div>
+              <ul class="jtour__notes">
+                <li style="--y:12.3"><i class="jnote__arw" aria-hidden="true"></i><span>Tiêu đề chuyển thể sang tiếng Việt</span></li>
+                <li style="--y:42"><i class="jnote__arw jnote__arw--alt" aria-hidden="true"></i><span>Mỗi dòng có video gốc, tác giả, link và bản chuyển thể</span></li>
+              </ul>
+            </div>
+            <div class="jtour__shot" data-j="2">
+              <div class="jtour__win">
+                <div class="ashot__bar"><i></i><i></i><i></i><span>Notion · Quote · Sách</span></div>
+                <div class="jtour__img">
+                  <img src="assets/img/notion/tour-quote.webp" alt="Thư viện sách trong Notion có điểm, trạng thái và chủ đề" width="1300" height="975" loading="lazy" decoding="async">
+                  <ul class="jpins">
+                    <li class="jpin jpin--dl" style="--x:29.6;--y:23"><i class="jpin__arw" aria-hidden="true"></i><span>Chấm điểm từng nguồn</span></li>
+                  </ul>
+                </div>
+              </div>
+              <ul class="jtour__notes">
+                <li style="--y:53.5"><i class="jnote__arw jnote__arw--alt" aria-hidden="true"></i><span>Ghi chú để lần sau tìm lại</span></li>
+              </ul>
+            </div>
+            <div class="jtour__shot" data-j="3">
+              <div class="jtour__win">
+                <div class="ashot__bar"><i></i><i></i><i></i><span>Notion · Title & Thumbnail · Script + Shot list</span></div>
+                <img src="assets/img/notion/tour-script.webp" alt="Trang kịch bản trong Notion với 3 tiêu đề A/B và bảng shot list" width="960" height="720" loading="lazy" decoding="async">
+              </div>
+              <ul class="jtour__notes">
+                <li style="--y:10"><i class="jnote__arw" aria-hidden="true"></i><span>3 tiêu đề, 3 thumbnail để A/B test</span></li>
+                <li style="--y:84"><i class="jnote__arw jnote__arw--alt" aria-hidden="true"></i><span>Shot list có mã từng nhịp cho editor</span></li>
+              </ul>
+            </div>
+            <div class="jtour__shot" data-j="4">
+              <div class="jtour__win">
+                <div class="ashot__bar"><i></i><i></i><i></i><span>Notion · Lý do AI trông cũng có vẻ giàu có hơn bạn</span></div>
+                <div class="jtour__img">
+                  <img src="assets/img/notion/tour-video.webp" alt="Trang một video trong Notion với các ô tick TTH, Write, Film, Done" width="1004" height="753" loading="lazy" decoding="async">
+                  <ul class="jpins">
+                    <li class="jpin jpin--l" style="--x:41.5;--y:25.6"><i class="jpin__arw" aria-hidden="true"></i><span>Trụ nội dung và nhiệm vụ trong phễu</span></li>
+                    <li class="jpin jpin--l jpin--alt" style="--x:28;--y:55.8"><i class="jpin__arw" aria-hidden="true"></i><span>Tick Film xong là AI vào việc dựng</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="jtour__shot" data-j="5">
+              <div class="jtour__win">
+                <div class="ashot__bar"><i></i><i></i><i></i><span>Notion · Moodboard</span></div>
+                <div class="jtour__img">
+                  <img src="assets/img/notion/tour-mood.webp" alt="Moodboard thumbnail tham khảo trong Notion" width="1200" height="900" loading="lazy" decoding="async">
+                  <ul class="jpins">
+                    <li class="jpin jpin--ul" style="--x:69.6;--y:42.4;--w:22cqw"><i class="jpin__arw" aria-hidden="true"></i><span>Ghi chú ý tưởng ngay trên thẻ</span></li>
+                    <li class="jpin jpin--l jpin--alt" style="--x:47.3;--y:73.2;--w:44cqw"><i class="jpin__arw" aria-hidden="true"></i><span>Mẫu nào cũng lưu kèm link video gốc</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="jtour__shot" data-j="6">
+              <div class="jtour__win">
+                <div class="ashot__bar"><i></i><i></i><i></i><span>Notion · Contents · Sponsor</span></div>
+                <div class="jtour__img">
+                  <img src="assets/img/notion/tour-booking.webp" alt="Bảng booking nhãn hàng trong Notion, giá từng deal đã được ẩn, doanh thu tháng là số minh hoạ" width="1360" height="1020" loading="lazy" decoding="async">
+                  <ul class="jpins">
+                    <li class="jpin jpin--l" style="--x:16.5;--y:12.5"><i class="jpin__arw" aria-hidden="true"></i><span>Doanh thu từng tháng (số minh hoạ)</span></li>
+                    <li class="jpin jpin--dl jpin--sm" style="--x:54.9;--y:7.4"><i class="jpin__arw" aria-hidden="true"></i><span>43 deal đã thu tiền</span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="aikit__cta reveal">
+        <a class="btn btn--mint" href="#dang-ky">Đăng ký để nhận bộ hệ thống <span aria-hidden="true">→</span></a>
+        <p>Dành riêng cho học viên Kênh Tay Trái, đi cùng phần tích hợp AI ở giai đoạn Gieo Hạt.</p>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ============================ 7. QUY TRÌNH + FAQ ============================ -->
   <section class="section apply bg-ivory" id="quy-trinh">
     <div class="container apply__grid">
@@ -994,6 +1423,6 @@
   </div>
 
 
-<script src="js/main.js?v=20" defer></script>
+<script src="js/main.js?v=30" defer></script>
 </body>
 </html>

@@ -447,3 +447,327 @@ var HAS_IO = 'IntersectionObserver' in window;
 
   renderStep('next');
 })();
+
+/* ------------------------------------------- VIDEO NHỎ TRONG SECTION AI */
+// Bấm play để phát; video có data-autoplay tự phát MỘT lần khi vào view (muted).
+// Không loop — hết thì hiện lại nút play để xem lại.
+(function initAiVideos() {
+  var boxes = [].slice.call(document.querySelectorAll('[data-aivideo]'));
+  if (!boxes.length) return;
+
+  boxes.forEach(function (box) {
+    var video = box.querySelector('video');
+    var btn = box.querySelector('.aivideo__play');
+    if (!video) return;
+
+    // Màn hẹp: dùng bản dọc 4:5 (chữ trong cửa sổ chat đọc được trên điện thoại)
+    if (box.dataset.srcMobile && window.innerWidth < 760) {
+      video.src = box.dataset.srcMobile;
+      if (box.dataset.posterMobile) video.poster = box.dataset.posterMobile;
+      box.classList.add('is-portrait');
+    }
+
+    box.playFromStart = function () {
+      try { video.currentTime = 0; } catch (e) {}
+      var p = video.play();
+      if (p && p.catch) p.catch(function () {});
+    };
+
+    if (btn) btn.addEventListener('click', function () {
+      if (video.ended || video.currentTime > 0.2) box.playFromStart();
+      else { var p = video.play(); if (p && p.catch) p.catch(function () {}); }
+    });
+    video.addEventListener('play', function () { box.classList.add('is-playing'); });
+    video.addEventListener('pause', function () { box.classList.remove('is-playing'); });
+    video.addEventListener('ended', function () { box.classList.remove('is-playing'); });
+    video.addEventListener('click', function () { if (!video.paused) video.pause(); });
+  });
+
+  if (!HAS_IO || REDUCE_MOTION) return;
+  var autoIO = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      autoIO.unobserve(entry.target);
+      entry.target.playFromStart();
+    });
+  }, { threshold: 0.55 });
+  boxes.forEach(function (box) {
+    if (box.hasAttribute('data-autoplay')) autoIO.observe(box);
+  });
+})();
+
+/* ------------------------------------------- DEMO CLAUDE (terminal) */
+(function initAiDemo() {
+  var root = document.querySelector('[data-aidemo]');
+  if (!root) return;
+
+  var ORDER = ['skill', 'motion', 'thumb', 'notion'];
+  var NAMES = { skill: 'Bộ skill AI', motion: 'Dựng hình & sub', thumb: 'Làm thumbnail', notion: 'Giao việc trên Notion' };
+  var tabs = [].slice.call(root.querySelectorAll('.aidemo__tab'));
+  var replayBtn = root.querySelector('[data-demo-replay]');
+  var nextBtns = [].slice.call(root.querySelectorAll('[data-demo-next]'));
+  var nextBtn = nextBtns[0];
+  var stage = root.querySelector('.aidemo__stage');
+  var current = 'skill';
+  var timers = [];
+
+  // Giữ nguyên câu lệnh gốc (cũng là nội dung hiển thị khi không có JS)
+  root.querySelectorAll('.term__typed').forEach(function (el) { el.dataset.full = el.textContent; });
+
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function clearTimers() { timers.forEach(clearTimeout); timers = []; }
+
+  function pauseVideos() {
+    root.querySelectorAll('video').forEach(function (v) { if (!v.paused) v.pause(); });
+  }
+
+  function show(id) {
+    current = id;
+    tabs.forEach(function (t) {
+      var on = t.dataset.demo === id;
+      t.classList.toggle('is-active', on);
+      t.setAttribute('aria-selected', on);
+    });
+    root.querySelectorAll('.term__pane').forEach(function (p) {
+      var on = p.dataset.pane === id;
+      p.classList.toggle('is-active', on);
+      if (on) {
+        var tool = root.querySelector('.term__tool'), where = root.querySelector('.term__where');
+        if (tool) tool.textContent = p.dataset.tool || 'Claude Code';
+        if (where) where.textContent = '~/' + (p.dataset.where || '');
+      }
+    });
+    root.querySelectorAll('.aiout__pane').forEach(function (p) { p.classList.toggle('is-active', p.dataset.out === id); });
+    // tab không có phiên terminal (danh mục skill) thì khung kết quả chiếm cả bề ngang
+    if (stage) stage.classList.toggle('is-catalog', !root.querySelector('.term__pane[data-pane="' + id + '"]'));
+  }
+
+  function setNext() {
+    var i = ORDER.indexOf(current);
+    var isLast = i === ORDER.length - 1;
+    nextBtns.forEach(function (b) {
+      b.innerHTML = isLast
+        ? 'Xem lại từ đầu <span aria-hidden="true">→</span>'
+        : 'Xem tiếp: ' + NAMES[ORDER[i + 1]] + ' <span aria-hidden="true">→</span>';
+    });
+  }
+
+  function finish(pane, out, id) {
+    pane.querySelector('.term__done').classList.remove('is-wait');
+    out.classList.remove('is-waiting');
+    if (id === 'motion') {
+      var box = out.querySelector('[data-aivideo]');
+      if (box && box.playFromStart) later(function () { box.playFromStart(); }, 250);
+    }
+    if (nextBtn) nextBtn.classList.remove('is-hidden');
+  }
+
+  function run(id) {
+    clearTimers();
+    pauseVideos();
+    show(id);
+    setNext();
+
+    var pane = root.querySelector('.term__pane[data-pane="' + id + '"]');
+    var out = root.querySelector('.aiout__pane[data-out="' + id + '"]');
+    if (!pane) { out.classList.remove('is-waiting'); return; }
+    var typed = pane.querySelector('.term__typed');
+    var steps = [].slice.call(pane.querySelectorAll('.term__steps li'));
+    var done = pane.querySelector('.term__done');
+
+    if (REDUCE_MOTION) {
+      typed.textContent = typed.dataset.full;
+      steps.forEach(function (li) { li.className = 'is-done'; });
+      done.classList.remove('is-wait');
+      out.classList.remove('is-waiting');
+      if (nextBtn) nextBtn.classList.remove('is-hidden');
+      return;
+    }
+
+    // Trạng thái chờ
+    typed.textContent = '';
+    typed.classList.add('is-typing');
+    steps.forEach(function (li) { li.className = 'is-wait'; });
+    done.classList.add('is-wait');
+    out.classList.add('is-waiting');
+    if (nextBtn) nextBtn.classList.add('is-hidden');
+
+    // 1. Gõ câu lệnh (tổng ~1,4s dù câu dài hay ngắn)
+    var full = typed.dataset.full;
+    var perChar = Math.max(9, Math.min(22, 1400 / full.length));
+    var i = 0;
+    (function type() {
+      i += 1;
+      typed.textContent = full.slice(0, i);
+      if (i < full.length) later(type, perChar);
+      else later(startSteps, 380);
+    })();
+
+    // 2. Các bước chạy lần lượt
+    function startSteps() {
+      typed.classList.remove('is-typing');
+      var t = 0;
+      steps.forEach(function (li, k) {
+        later(function () { li.className = 'is-run'; }, t);
+        t += k === steps.length - 1 ? 620 : 520 + (k % 2) * 160;
+        later(function () { li.className = 'is-done'; }, t);
+      });
+      later(function () { finish(pane, out, id); }, t + 260);
+    }
+  }
+
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () { run(tab.dataset.demo); });
+  });
+  if (replayBtn) replayBtn.addEventListener('click', function () { run(current); });
+  nextBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var i = ORDER.indexOf(current);
+      run(ORDER[(i + 1) % ORDER.length]);
+    });
+  });
+
+  // Chạy demo đầu tiên khi khối vào view (một lần)
+  if (!HAS_IO) { run(ORDER[0]); return; }
+  var started = false;
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting || started) return;
+      started = true;
+      io.disconnect();
+      run(ORDER[0]);
+    });
+  }, { threshold: 0.35 });
+  io.observe(root);
+})();
+
+/* ------------------------------------------- ẢNH CHỤP NOTION + MŨI TÊN */
+// Mũi tên ngắn vẽ tay (SVG do Codex vẽ, assets/img/arrows) đặt sát chú thích, hướng vào ảnh.
+// Kiểu mũi tên chọn theo chênh lệch giữa vị trí chú thích (--at) và điểm đích (data-y).
+// Màn hẹp (<900px): chấm số trên ảnh + danh sách đánh số bên dưới.
+(function initAshots() {
+  var figs = [].slice.call(document.querySelectorAll('[data-ashot]'));
+  if (!figs.length) return;
+
+  function pick(left, dy, i) {
+    if (left) {
+      if (dy < -5) return ['arc-up-right', false];
+      if (dy > 5) return ['arc-down-right', false];
+      return [i % 2 ? 's-right' : 'loop-right', false];
+    }
+    if (dy > 5) return ['loop-down-left', false];
+    if (dy < -5) return ['arc-up-right', true];      // lật ngang thành "lên-trái"
+    return [i % 2 ? 'arc-left' : 'loop-left', false];
+  }
+
+  figs.forEach(function (fig) {
+    var shot = fig.querySelector('.ashot__shot');
+    fig.querySelectorAll('.ashot__side li').forEach(function (li, i) {
+      var left = !!li.closest('.ashot__side--l');
+      var at = parseFloat(li.style.getPropertyValue('--at')) || 0;
+      var dy = parseFloat(li.dataset.y) - at;
+      var p = pick(left, dy, i);
+      var arw = document.createElement('i');
+      arw.className = 'ashot__arw ashot__arw--' + (dy < -5 ? 'up' : dy > 5 ? 'down' : 'mid');
+      arw.setAttribute('aria-hidden', 'true');
+      arw.style.setProperty('--m', 'url("' + new URL('assets/img/arrows/' + p[0] + '.svg', document.baseURI).href + '")');
+      arw.style.setProperty('--i', i);
+      if (p[1]) arw.classList.add('is-flip');
+      li.appendChild(arw);
+
+      // chấm số trên ảnh cho màn hẹp
+      var pin = document.createElement('span');
+      pin.className = 'ashot__pin';
+      pin.setAttribute('aria-hidden', 'true');
+      pin.textContent = li.querySelector('.ashot__n').textContent;
+      pin.style.left = li.dataset.x + '%';
+      pin.style.top = li.dataset.y + '%';
+      shot.appendChild(pin);
+    });
+  });
+
+  // mũi tên "vẽ" ra khi ảnh vào view lần đầu
+  if (!HAS_IO || REDUCE_MOTION) {
+    figs.forEach(function (f) { f.classList.add('is-drawn'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        io.unobserve(e.target);
+        e.target.classList.add('is-drawn');
+      });
+    }, { threshold: 0.3 });
+    figs.forEach(function (f) { io.observe(f); });
+  }
+
+})();
+
+/* ------------------------------------------- HÀNH TRÌNH MỘT VIDEO (tour) */
+// Cuộn tới chặng nào thì khung ảnh bên phải đổi sang màn của chặng đó và
+// thanh chặng sáng lên. Bấm vào chặng trên thanh để cuộn tới chặng đó.
+(function initJourney() {
+  var root = document.querySelector('[data-jtour]');
+  if (!root) return;
+  var steps = [].slice.call(root.querySelectorAll('.jtour__step'));
+  var pills = [].slice.call(root.querySelectorAll('.jtour__pill'));
+  var shots = [].slice.call(root.querySelectorAll('.jtour__shot'));
+  var current = 1;
+
+  function setActive(j) {
+    if (j === current) return;
+    current = j;
+    steps.forEach(function (s) { s.classList.toggle('is-active', +s.dataset.j === j); });
+    shots.forEach(function (s) { s.classList.toggle('is-on', +s.dataset.j === j); });
+    pills.forEach(function (p) {
+      var n = +p.dataset.j;
+      p.classList.toggle('is-active', n === j);
+      p.classList.toggle('is-done', n < j);
+      p.setAttribute('aria-current', n === j ? 'step' : 'false');
+    });
+    var pill = pills[j - 1];
+    if (pill && window.innerWidth <= 900 && pill.scrollIntoView) {
+      var rail = pill.parentElement.parentElement;
+      rail.scrollTo({ left: pill.parentElement.offsetLeft - 16, behavior: REDUCE_MOTION ? 'auto' : 'smooth' });
+    }
+  }
+
+  // Căn khung ảnh giữa vùng nhìn (dưới menu + thanh chặng) và đặt "đường kích hoạt"
+  // đúng tâm khung: chặng nào có khối chữ chạm đường này thì thành chặng đang xem.
+  var stage = root.querySelector('.jtour__stage');
+  var rail = root.querySelector('.jtour__rail');
+  var io = null;
+  function layout() {
+    if (!stage || window.innerWidth <= 900) { if (io) io.disconnect(); io = null; return; }
+    var nav = document.getElementById('nav');
+    var top0 = (nav ? nav.offsetHeight : 68) + (rail ? rail.offsetHeight : 62);
+    var H = stage.offsetHeight;
+    var free = window.innerHeight - top0;
+    var top = top0 + Math.max(12, (free - H) / 2);
+    stage.style.top = top + 'px';
+    if (!HAS_IO) return;
+    var line = Math.round(top + H / 2);
+    if (io) io.disconnect();
+    io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) setActive(+e.target.dataset.j); });
+    }, { rootMargin: '-' + line + 'px 0px -' + Math.max(0, window.innerHeight - line - 2) + 'px 0px' });
+    steps.forEach(function (s) { io.observe(s.querySelector('.jtour__body')); });
+  }
+  steps.forEach(function (s) { s.querySelector('.jtour__body').dataset.j = s.dataset.j; });
+  var t = 0;
+  window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(layout, 120); }, { passive: true });
+  var firstImg = stage && stage.querySelector('img');
+  if (firstImg && !firstImg.complete) firstImg.addEventListener('load', layout);
+  layout();
+
+  pills.forEach(function (p) {
+    p.addEventListener('click', function () {
+      var step = steps[+p.dataset.j - 1];
+      if (!step) return;
+      var body = step.querySelector('.jtour__body');
+      var r = body.getBoundingClientRect();
+      var line = stage && window.innerWidth > 900 ? parseFloat(stage.style.top) + stage.offsetHeight / 2 : window.innerHeight * 0.4;
+      var y = r.top + window.scrollY + r.height / 2 - line;
+      window.scrollTo({ top: y, behavior: REDUCE_MOTION ? 'auto' : 'smooth' });
+    });
+  });
+})();
