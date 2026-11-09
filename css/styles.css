@@ -1957,3 +1957,136 @@ body.no-scroll{overflow:hidden;}
   .jtour__who{order:2;}
   .jtour__body .jmob{order:1;margin-bottom:18px;}
 }
+
+/* ==========================================================================
+   HỌC PHÍ — 3 gói (9/11/2026)
+   Desktop: một bảng liền, đầu cột (tên · giá · nút) thẳng hàng nhờ subgrid,
+   cột nhãn bên trái như bảng giá Làm Chủ Tiền nhưng chỉ 6 dòng.
+   Mobile < 900px: 3 thẻ chồng, mỗi thẻ chỉ liệt kê thứ mình có.
+   Thẻ Học viên là thẻ anchor duy nhất dùng shadow 6px của trang.
+   ========================================================================== */
+.pricing__head{text-align:center;max-width:720px;margin:0 auto clamp(2.5rem,5vw,3.5rem);}
+.pricing__title{font-size:var(--step-h2);line-height:1.12;margin:14px 0 18px;}
+.pricing__intro{font-size:var(--step-body);line-height:1.7;color:var(--fg-2);}
+.pricing__note{
+  max-width:720px;margin:clamp(1.75rem,3vw,2.25rem) auto 0;text-align:center;
+  font-size:0.875rem;line-height:1.65;color:var(--fg-3);
+}
+
+.tiers{
+  display:grid;
+  grid-template-columns:minmax(210px,1.15fr) repeat(3,minmax(0,1fr));
+  grid-template-rows:auto repeat(6,auto);
+  column-gap:14px;
+}
+.tiers__labels,.tier{grid-row:1 / span 7;display:grid;grid-template-rows:subgrid;}
+.tier__rows{display:contents;}
+
+.tiers__corner{
+  align-self:end;padding:0 4px 20px;
+  display:flex;flex-direction:column;gap:6px;
+}
+.tiers__corner b{font-family:var(--font-head);font-weight:700;font-size:1.0625rem;}
+.tiers__corner span{font-size:0.8125rem;line-height:1.5;color:var(--fg-3);}
+.tiers__label{
+  display:flex;flex-direction:column;justify-content:center;gap:2px;
+  padding:14px 4px;border-top:1px solid var(--hairline);
+  font-size:0.9375rem;font-weight:600;line-height:1.35;color:var(--fg-1);
+}
+.tiers__label small{font-size:0.75rem;font-weight:400;color:var(--fg-3);}
+
+.tier{
+  position:relative;background:var(--bg-1);
+  border:1px solid var(--hairline);border-radius:var(--r-card);
+}
+.tier__head{
+  display:flex;flex-direction:column;
+  padding:24px 22px 20px;
+}
+.tier__name{font-size:1.375rem;line-height:1.2;}
+.tier__price{
+  font-family:var(--font-head);font-weight:700;
+  font-size:clamp(1.5rem,1.2rem + 0.9vw,2rem);line-height:1.1;margin:12px 0 8px;
+}
+.tier__sub{flex:1;font-size:0.875rem;line-height:1.55;color:var(--fg-2);margin-bottom:18px;}
+.tier__cta{width:100%;justify-content:center;padding-inline:14px;font-size:0.9375rem;white-space:nowrap;}
+.tier__alt{
+  display:block;min-height:1.25rem;margin-top:10px;text-align:center;
+  font-size:0.8125rem;line-height:1.5;color:var(--fg-3);
+}
+a.tier__alt{text-decoration:underline;text-decoration-color:var(--hairline);text-underline-offset:3px;}
+a.tier__alt:hover{color:var(--fg-1);text-decoration-color:var(--fg-1);}
+
+.tier__rows li{
+  display:flex;align-items:center;justify-content:center;
+  padding:14px 12px;border-top:1px solid var(--row);
+}
+.tier__rows li::before{
+  content:"";flex:none;width:22px;height:22px;border-radius:50%;
+  background:var(--mint) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6.5 12.5l3.5 3.5 7.5-8' stroke='%231B1624' stroke-width='2.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/15px no-repeat;
+}
+.tier__rows li.is-no::before{
+  background:none;width:14px;height:2px;border-radius:2px;background-color:var(--fg-4);opacity:.45;
+}
+/* desktop: nhãn đã có ở cột trái → chữ trong ô chỉ cho trình đọc màn hình */
+.tier__k{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+
+.tier--featured{border:1.5px solid var(--fg-1);border-radius:var(--r-anchor);box-shadow:var(--shadow-anchor);}
+.tier__badge{
+  position:absolute;top:-12px;left:22px;z-index:1;
+  background:var(--yellow);color:var(--fg-1);border:1.5px solid var(--fg-1);
+  border-radius:var(--r-pill);padding:3px 12px;
+  font-size:0.75rem;font-weight:700;letter-spacing:0.02em;
+}
+
+@media (max-width:900px){
+  .tiers{display:flex;flex-direction:column;gap:22px;max-width:520px;margin-inline:auto;}
+  .tiers__labels{display:none;}
+  .tier{display:block;}
+  .tier__rows{display:block;padding:4px 22px 18px;}
+  .tier__rows li{justify-content:flex-start;gap:12px;padding:10px 0;border-top:none;}
+  .tier__rows li.is-no{display:none;}
+  .tier__rows li::before{width:20px;height:20px;background-size:13px;}
+  .tier__k{position:static;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal;font-size:0.9375rem;line-height:1.45;}
+  .tier__head{border-bottom:1px solid var(--row);}
+  .tier__sub{flex:none;}
+  .tier__alt:empty{display:none;}
+}
+
+/* ---- Pop-up nộp biên lai từ thiện (dùng lại khung .signup-modal) ---- */
+.donate{min-height:0;}
+.donate .signup__step select{margin-top:2px;}
+.donate__code{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  border:1.5px dashed var(--fg-3);border-radius:var(--r-card);
+  background:var(--bg-2);padding:16px 18px;margin:6px 0 22px;
+}
+.donate__code b{font-family:var(--font-head);font-size:clamp(1.5rem,1.2rem + 1vw,2rem);letter-spacing:0.06em;}
+.donate__rules{display:flex;flex-direction:column;gap:10px;}
+.donate__rules li{
+  position:relative;padding-left:20px;
+  font-size:0.9375rem;line-height:1.6;color:var(--fg-2);
+}
+.donate__rules li::before{
+  content:"";position:absolute;left:2px;top:0.62em;width:7px;height:7px;border-radius:50%;background:var(--coral);
+}
+.donate__file{
+  display:flex;align-items:center;gap:12px;cursor:pointer;
+  border:1.5px solid var(--hairline);border-radius:var(--r-card);
+  padding:16px 18px;margin-bottom:18px;transition:border-color .15s ease;
+  font-size:0.9375rem;color:var(--fg-2);
+}
+.donate__file:hover,.donate__file.has-file{border-color:var(--fg-1);color:var(--fg-1);}
+.donate__file input{position:absolute;opacity:0;width:1px;height:1px;}
+.donate__file::before{
+  content:"";flex:none;width:34px;height:34px;border-radius:50%;
+  background:var(--yellow) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 16V5m0 0l-4.5 4.5M12 5l4.5 4.5M5 19h14' stroke='%231B1624' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/18px no-repeat;
+}
+.donate__file:focus-within{outline:3px solid rgba(6,147,227,0.4);outline-offset:2px;}
+.donate__error{
+  font-size:0.875rem;line-height:1.55;color:#B4532F;background:var(--coral-soft);
+  border-radius:8px;padding:10px 14px;margin-top:4px;
+}
+.donate .btn[disabled]{opacity:.6;cursor:progress;}
+.donate__wait{background:var(--yellow);}
+.donate__go{margin-top:22px;}

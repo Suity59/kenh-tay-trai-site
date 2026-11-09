@@ -35,36 +35,42 @@ var HAS_IO = 'IntersectionObserver' in window;
 })();
 
 /* -------------------------------------------------- POP-UP ĐĂNG KÝ */
-(function initModal() {
-  var modal = document.getElementById('dang-ky');
-  if (!modal) return;
+(function initModals() {
+  // Hai pop-up dùng chung khung .signup-modal: đơn đăng ký (#dang-ky) và
+  // nộp biên lai từ thiện gói Đồng hành (#ung-ho).
+  ['dang-ky', 'ung-ho'].forEach(function (id) {
+    var modal = document.getElementById(id);
+    if (!modal) return;
 
-  var open = function (e) {
-    if (e) e.preventDefault();
-    modal.classList.add('is-open');
-    modal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('no-scroll');
-    // Modal không đi qua reveal observer nên phải tự vẽ underline, không thì gạch chân vô hình.
-    modal.querySelectorAll('.mark--underline').forEach(function (m) {
-      m.classList.add('is-drawn');
+    var open = function (e) {
+      if (e) e.preventDefault();
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('no-scroll');
+      // Modal không đi qua reveal observer nên phải tự vẽ underline, không thì gạch chân vô hình.
+      modal.querySelectorAll('.mark--underline').forEach(function (m) {
+        m.classList.add('is-drawn');
+      });
+      var first = modal.querySelector('.signup__step.is-active input, .signup__step.is-active select, .signup__step.is-active textarea');
+      if (first && first.type !== 'file') first.focus();
+    };
+    var close = function () {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('no-scroll');
+    };
+
+    document.querySelectorAll('a[href="#' + id + '"]').forEach(function (a) {
+      a.addEventListener('click', open);
     });
-    var first = modal.querySelector('.signup__step.is-active input, .signup__step.is-active select, .signup__step.is-active textarea');
-    if (first) first.focus();
-  };
-  var close = function () {
-    modal.classList.remove('is-open');
-    modal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('no-scroll');
-  };
-
-  document.querySelectorAll('a[href="#dang-ky"]').forEach(function (a) {
-    a.addEventListener('click', open);
-  });
-  modal.querySelectorAll('[data-modal-close]').forEach(function (el) {
-    el.addEventListener('click', close);
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+    modal.querySelectorAll('[data-modal-close]').forEach(function (el) {
+      el.addEventListener('click', close);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) close();
+    });
+    // Link trực tiếp kenhtaytrai.namanhsuit.com/#ung-ho mở luôn pop-up.
+    if (location.hash === '#' + id) open();
   });
 })();
 
@@ -770,4 +776,133 @@ var HAS_IO = 'IntersectionObserver' in window;
       window.scrollTo({ top: y, behavior: REDUCE_MOTION ? 'auto' : 'smooth' });
     });
   });
+})();
+
+
+/* ==========================================================================
+   Gói Đồng hành — ủng hộ từ thiện để mở học phần 0–3
+   API ở trang học (hoc.namanhsuit.com/api/ktt/tu-thien/*). Mã ủng hộ lưu ở
+   localStorage để khách đóng tab đi chuyển khoản rồi quay lại vẫn đúng bước.
+   ========================================================================== */
+(function initDonate() {
+  var modal = document.getElementById('ung-ho');
+  if (!modal) return;
+  var API = /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
+    ? 'http://localhost:3000'
+    : 'https://hoc.namanhsuit.com';
+  var KEY = 'ktt-ung-ho';
+  var bar = modal.querySelector('[data-donate-bar]');
+  var steps = modal.querySelectorAll('[data-donate-step]');
+  var dones = modal.querySelectorAll('[data-donate-done]');
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { state = {}; }
+  var save = function () { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} };
+
+  function show(step) {
+    steps.forEach(function (el) { el.classList.toggle('is-active', el.dataset.donateStep === String(step)); });
+    dones.forEach(function (el) { el.classList.toggle('is-active', el.dataset.donateDone === step); });
+    var pct = { 1: 33, 2: 66, 3: 90, duyet: 100, cho_duyet: 100 }[step] || 33;
+    bar.style.width = pct + '%';
+    modal.querySelectorAll('[data-donate-email]').forEach(function (b) { b.textContent = state.email || ''; });
+    if (state.code) modal.querySelector('[data-donate-note]').textContent = 'KTT ' + state.code;
+    var panel = modal.querySelector('.signup-modal__panel');
+    if (panel) panel.scrollTop = 0;
+  }
+  function error(form, msg) {
+    var el = form.querySelector('[data-donate-error]');
+    el.textContent = msg || '';
+    el.hidden = !msg;
+  }
+
+  // Bước 1 — lấy mã
+  var f1 = modal.querySelector('[data-donate-step="1"]');
+  if (state.email) f1.email.value = state.email;
+  if (state.name) f1.name.value = state.name;
+  f1.addEventListener('submit', function (e) {
+    e.preventDefault();
+    error(f1, '');
+    var email = f1.email.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return error(f1, 'Email chưa đúng định dạng, bạn kiểm tra lại giúp mình nhé.');
+    if (!f1.source.value) return error(f1, 'Bạn chọn giúp mình biết đến Kênh Tay Trái qua đâu nhé.');
+    var btn = f1.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    fetch(API + '/api/ktt/tu-thien/ma', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, name: f1.name.value.trim(), source: f1.source.value })
+    })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (!res.ok || !res.j.code) throw new Error(res.j.error === 'ratelimit' ? 'Bạn thử lại sau ít phút nhé.' : 'Chưa lấy được mã, bạn thử lại giúp mình.');
+        state = { email: email.toLowerCase(), name: f1.name.value.trim(), code: res.j.code, step: 2 };
+        save();
+        show(2);
+      })
+      .catch(function (err) { error(f1, err.message || 'Không kết nối được, bạn thử lại nhé.'); })
+      .then(function () { btn.disabled = false; });
+  });
+
+  // Bước 2 — chép mã, đi tiếp
+  modal.querySelector('[data-donate-copy]').addEventListener('click', function (e) {
+    var b = e.currentTarget;
+    var text = 'KTT ' + (state.code || '');
+    (navigator.clipboard ? navigator.clipboard.writeText(text) : Promise.reject())
+      .then(function () { b.textContent = 'Đã chép'; setTimeout(function () { b.textContent = 'Chép mã'; }, 1600); })
+      .catch(function () {});
+  });
+  modal.querySelectorAll('[data-donate-back]').forEach(function (b) {
+    b.addEventListener('click', function () { state.step = Number(b.dataset.donateBack); save(); show(state.step); });
+  });
+  modal.querySelector('[data-donate-go]').addEventListener('click', function () { state.step = 3; save(); show(3); });
+
+  // Bước 3 — nộp biên lai
+  var f3 = modal.querySelector('[data-donate-step="3"]');
+  var label = f3.querySelector('.donate__file');
+  f3.receipt.addEventListener('change', function () {
+    var file = f3.receipt.files[0];
+    label.classList.toggle('has-file', !!file);
+    f3.querySelector('[data-donate-filename]').textContent = file ? file.name : 'Chọn ảnh chụp màn hình (tối đa 5 MB)';
+  });
+  var MESSAGES = {
+    anh: 'Bạn chọn ảnh biên lai trước đã nhé.',
+    anh_lon: 'Ảnh lớn hơn 5 MB, bạn chụp màn hình lại (đừng gửi ảnh chụp bằng máy khác) rồi thử nhé.',
+    anh_dinh_dang: 'Mình chỉ nhận ảnh PNG, JPG, WEBP hoặc HEIC.',
+    ma: 'Mã ủng hộ không khớp với email này. Bạn quay lại bước 1 lấy mã mới nhé.',
+    tu_choi: 'Biên lai của mã này đã bị từ chối, bạn nhắn mình qua Discord để xem lại nhé.',
+    ratelimit: 'Bạn gửi hơi nhiều lần rồi, thử lại sau ít phút nhé.'
+  };
+  f3.addEventListener('submit', function (e) {
+    e.preventDefault();
+    error(f3, '');
+    var file = f3.receipt.files[0];
+    if (!file) return error(f3, MESSAGES.anh);
+    if (file.size > 5 * 1024 * 1024) return error(f3, MESSAGES.anh_lon);
+    if (!state.code || !state.email) { show(1); return; }
+    var body = new FormData();
+    body.append('code', state.code);
+    body.append('email', state.email);
+    body.append('charity', f3.charity.value.trim());
+    body.append('amount', f3.amount.value.trim());
+    body.append('receipt', file);
+    var btn = f3.querySelector('[data-donate-submit]');
+    var original = btn.innerHTML;
+    btn.disabled = true;
+    btn.textContent = 'AI đang đọc biên lai…';
+    fetch(API + '/api/ktt/tu-thien/bien-lai', { method: 'POST', body: body })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (res) {
+        if (res.j.status === 'duyet' || res.j.status === 'cho_duyet') {
+          state.step = res.j.status;
+          save();
+          show(res.j.status);
+          return;
+        }
+        if (res.j.error === 'retry') return error(f3, res.j.message);
+        error(f3, MESSAGES[res.j.error] || 'Chưa gửi được biên lai, bạn thử lại giúp mình nhé.');
+      })
+      .catch(function () { error(f3, 'Không kết nối được, bạn kiểm tra mạng rồi thử lại nhé.'); })
+      .then(function () { btn.disabled = false; btn.innerHTML = original; });
+  });
+
+  show(state.code ? (state.step || 2) : 1);
 })();
