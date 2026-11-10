@@ -1976,10 +1976,10 @@ body.no-scroll{overflow:hidden;}
 .tiers{
   display:grid;
   grid-template-columns:minmax(210px,1.15fr) repeat(3,minmax(0,1fr));
-  grid-template-rows:auto repeat(6,auto);
+  grid-template-rows:auto repeat(4,auto);
   column-gap:14px;
 }
-.tiers__labels,.tier{grid-row:1 / span 7;display:grid;grid-template-rows:subgrid;}
+.tiers__labels,.tier{grid-row:1 / span 5;display:grid;grid-template-rows:subgrid;}
 .tier__rows{display:contents;}
 
 .tiers__corner{
@@ -2008,6 +2008,7 @@ body.no-scroll{overflow:hidden;}
   font-family:var(--font-head);font-weight:700;
   font-size:clamp(1.5rem,1.2rem + 0.9vw,2rem);line-height:1.1;margin:12px 0 8px;
 }
+.tier__price small{font-family:var(--font-body);font-size:0.5em;font-weight:500;color:var(--fg-2);margin-left:2px;}
 .tier__sub{flex:1;font-size:0.875rem;line-height:1.55;color:var(--fg-2);margin-bottom:18px;}
 .tier__cta{width:100%;justify-content:center;padding-inline:14px;font-size:0.9375rem;white-space:nowrap;}
 .tier__alt{
