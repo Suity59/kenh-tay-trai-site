@@ -780,7 +780,7 @@ var HAS_IO = 'IntersectionObserver' in window;
 
 
 /* ==========================================================================
-   Gói Đồng hành — ủng hộ từ thiện để mở học phần 0–3
+   Gói Blueprint — ủng hộ từ thiện để mở học phần 0–3
    API ở trang học (hoc.namanhsuit.com/api/ktt/tu-thien/*). Mã ủng hộ lưu ở
    localStorage để khách đóng tab đi chuyển khoản rồi quay lại vẫn đúng bước.
    ========================================================================== */
