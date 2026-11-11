@@ -283,6 +283,19 @@ var HAS_IO = 'IntersectionObserver' in window;
   });
 })();
 
+/* ------------------------------------- GÓI COMPLETE: TRẢ MỘT LẦN / THEO THÁNG */
+(function initPayToggle() {
+  const group = document.querySelector('.paytoggle');
+  if (!group) return;
+  const card = group.closest('.tier');
+  const btns = group.querySelectorAll('[data-pay-set]');
+  btns.forEach((btn) => btn.addEventListener('click', () => {
+    const mode = btn.dataset.paySet;
+    btns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    card.querySelectorAll('[data-pay]').forEach((el) => { el.hidden = el.dataset.pay !== mode; });
+  }));
+})();
+
 /* ------------------------------------------------------------- FAQ */
 (function initFaq() {
   var qs = [].slice.call(document.querySelectorAll('.apply__q'));

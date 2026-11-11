@@ -1997,6 +1997,7 @@ body.no-scroll{overflow:hidden;}
 
 .tier{
   position:relative;background:var(--bg-1);
+  grid-template-columns:minmax(0,1fr); /* nút dài không được kéo thẻ rộng hơn cột */
   border:1px solid var(--hairline);border-radius:var(--r-card);
 }
 .tier__head{
@@ -2008,9 +2009,22 @@ body.no-scroll{overflow:hidden;}
   font-family:var(--font-head);font-weight:700;
   font-size:clamp(1.5rem,1.2rem + 0.9vw,2rem);line-height:1.1;margin:12px 0 8px;
 }
-.tier__price small{font-family:var(--font-body);font-size:0.5em;font-weight:500;color:var(--fg-2);margin-left:2px;}
+.tier__price small{display:inline-block;font-family:var(--font-body);font-size:0.5em;font-weight:500;color:var(--fg-2);margin-left:2px;} /* inline-block: hẹp thì "/tháng" xuống dòng, không tràn */
 .tier__sub{flex:1;font-size:0.875rem;line-height:1.55;color:var(--fg-2);margin-bottom:18px;}
-.tier__cta{width:100%;justify-content:center;padding-inline:14px;font-size:0.9375rem;white-space:nowrap;}
+.tier__cta{width:100%;justify-content:center;text-align:center;padding-inline:14px;font-size:0.9375rem;}
+.tier__terms{font-size:0.8125rem;line-height:1.5;color:var(--fg-2);background:var(--bg-2);border-radius:10px;padding:8px 12px;margin:-4px 0 16px;}
+/* Complete: chọn trả một lần hay theo tháng (giống bảng giá Làm Chủ Tiền) */
+.paytoggle{
+  display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:4px 0 16px;padding:4px;
+  border:1px solid var(--hairline);border-radius:var(--r-pill);background:var(--bg-2);
+}
+.paytoggle__btn{
+  min-height:40px;border:0;border-radius:var(--r-pill);background:transparent;cursor:pointer;
+  font:600 0.8125rem/1.2 var(--font-body);color:var(--fg-2);transition:background .2s,color .2s;
+}
+.paytoggle__btn:hover{background:var(--bg-3,rgba(0,0,0,.05));color:var(--fg-1);}
+.paytoggle__btn[aria-pressed="true"]{background:var(--fg-1);color:#fff;}
+.paytoggle__btn:focus-visible{outline:2px solid var(--fg-1);outline-offset:2px;}
 .tier__alt{
   display:block;min-height:1.25rem;margin-top:10px;text-align:center;
   font-size:0.8125rem;line-height:1.5;color:var(--fg-3);

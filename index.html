@@ -12,7 +12,7 @@
 <link rel="manifest" href="site.webmanifest">
 <link rel="preload" href="fonts/SVN-Recoleta%20Bold.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="fonts/SVN-Gilroy%20Regular.otf" as="font" type="font/otf" crossorigin>
-<link rel="stylesheet" href="css/styles.css?v=53">
+<link rel="stylesheet" href="css/styles.css?v=55">
 </head>
 <body>
 
@@ -1092,7 +1092,7 @@
             <h3 class="tier__name">Blueprint</h3>
             <p class="tier__price num">40.000đ<small>/tháng</small></p>
             <p class="tier__sub">Mở ngay ba học phần đầu về ngách, ý tưởng, tiêu đề và hook, để bạn biết mình có thật sự hợp với việc làm nội dung không</p>
-            <a class="btn btn--dark tier__cta" href="https://www.youtube.com/channel/UCKCKSw--Ftm3e22Us8CMBsA/join" target="_blank" rel="noopener">Tham gia YouTube Member <span aria-hidden="true">→</span></a>
+            <a class="btn btn--dark tier__cta" href="https://www.youtube.com/channel/UCKCKSw--Ftm3e22Us8CMBsA/join" target="_blank" rel="noopener">Đăng ký YouTube <span aria-hidden="true">→</span></a>
             <a class="tier__alt" href="https://hoc.namanhsuit.com/khoa-cua-toi">Đã là member? Kết nối Discord để mở học phần</a>
           </div>
           <ul class="tier__rows">
@@ -1108,10 +1108,18 @@
           <span class="tier__badge">Trọn chương trình</span>
           <div class="tier__head">
             <h3 class="tier__name">Complete</h3>
-            <p class="tier__price num">1.490.000đ</p>
+            <p class="tier__price num" aria-live="polite"><span data-pay="once">1.490.000đ</span><span data-pay="month" hidden>350.000đ<small>/tháng</small></span></p>
+            <div class="paytoggle" role="group" aria-label="Cách thanh toán gói Complete">
+              <button type="button" class="paytoggle__btn" data-pay-set="once" aria-pressed="true">Trả một lần</button>
+              <button type="button" class="paytoggle__btn" data-pay-set="month" aria-pressed="false">Theo tháng</button>
+            </div>
             <p class="tier__sub">Trọn lộ trình xây kênh nội dung, từ lúc chọn ngách đến khi kênh mang về cho bạn một nguồn thu nhập đều đặn hằng tháng</p>
-            <a class="btn btn--mint tier__cta" href="https://hoc.namanhsuit.com/mua/kenh-tay-trai?nguon=landing">Trả một lần <span aria-hidden="true">→</span></a>
-            <a class="tier__alt" href="https://www.youtube.com/channel/UCKCKSw--Ftm3e22Us8CMBsA/join" target="_blank" rel="noopener">hoặc 350.000đ/tháng qua YouTube Member</a>
+            <p class="tier__terms" data-pay="once">Học mãi, hoàn 100% nếu không hợp trong 7 ngày đầu.</p>
+            <p class="tier__terms" data-pay="month" hidden>Học khi membership YouTube còn hiệu lực.</p>
+            <a class="btn btn--mint tier__cta" data-pay="once" href="https://hoc.namanhsuit.com/mua/kenh-tay-trai?nguon=landing">Trả một lần <span aria-hidden="true">→</span></a>
+            <a class="btn btn--mint tier__cta" data-pay="month" hidden href="https://www.youtube.com/channel/UCKCKSw--Ftm3e22Us8CMBsA/join" target="_blank" rel="noopener">Đăng ký YouTube <span aria-hidden="true">→</span></a>
+            <span class="tier__alt" data-pay="once">Thanh toán chuyển khoản QR</span>
+            <a class="tier__alt" data-pay="month" hidden href="https://hoc.namanhsuit.com/khoa-cua-toi">Đã là member? Kết nối Discord để mở học phần</a>
           </div>
           <ul class="tier__rows">
             <li class="is-yes"><span class="tier__k">2 bài mở đầu</span></li>
@@ -1488,6 +1496,6 @@
 
 
 
-<script src="js/main.js?v=32" defer></script>
+<script src="js/main.js?v=33" defer></script>
 </body>
 </html>
